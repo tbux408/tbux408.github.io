@@ -1,0 +1,51 @@
+.carousel-container {
+  position: relative;
+  width: 100%;
+  padding: 0 2rem;
+  overflow: hidden; /* Keep the container from showing overflow */
+}
+
+.carousel {
+  padding: 2rem min(5%, 10rem) 2rem min(5%, 10rem);
+
+  display: flex;
+  overflow-x: scroll; /* Allow scrolling */
+  scroll-behavior: smooth;
+  margin-left: -2rem; /* Adjust margin to allow left side overflow */
+  margin-right: -2rem; /* Adjust margin to allow right side overflow */
+  scrollbar-width: none;
+}
+
+.card {
+  margin-right: 1rem;
+}
+
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(165, 165, 165, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  display: none;
+  border-radius: 50%;
+}
+
+.scroll-button.left {
+  left: min(1%, 2rem); /* Align the button to the container's edge */
+}
+
+.scroll-button.right {
+  right: min(1%, 2rem); /* Align the button to the container's edge */
+}
+
+.scroll-button:hover {
+  background-color: rgba(190, 190, 190, 0.5);
+  opacity: 50%;
+}
+
+.carousel-container:hover .scroll-button {
+  display: block;
+}

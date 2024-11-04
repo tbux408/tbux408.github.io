@@ -1,0 +1,66 @@
+.container {
+  width: 100vw;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+  width: min(40rem, 100%);
+}
+
+.main-container {
+  position: fixed;
+  z-index: 1;
+}
+
+.container-blur {
+  transition: background-color 5s ease-in-out, opacity 0.5s ease;
+  backdrop-filter: blur(10px);
+  height: 0;
+  opacity: 0;
+  width: 100vw;
+}
+
+.expand {
+  opacity: 1;
+  height: 100vh;
+  transition: background-color 5s ease-in-out, opacity 0.5s ease;
+}
+
+.collapse {
+  opacity: 0;
+  height: 0;
+  transition: height 1s ease 0.5s, background-color 5s ease-in-out,
+    opacity 0.5s ease;
+}
+
+.container-collapse {
+  width: 100vw;
+  height: fit-content;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.box-collapse {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: min(40rem, 100%);
+  padding: 1.2rem;
+}
+
+.menu-button {
+  display: flex;
+  align-items: center;
+  width: 2.5rem;
+  justify-content: space-between;
+}
