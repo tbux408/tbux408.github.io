@@ -17,4 +17,18 @@
 
 .headshot {
   width: min(18rem, 100%);
+  height: 100%;
+}
+
+.vt-logo {
+  width: min(18rem, 100%);
+  height: fit-content;
+}
+
+.description {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }

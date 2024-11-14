@@ -15,29 +15,35 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Card from "../components/Card";
 import CardCarousel from "../components/CardCarousel";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { useTheme } from "@mui/material/styles";
+import CheckIcon from "@mui/icons-material/Check";
+import LinkIcon from "@mui/icons-material/Link";
 
-function About({ navigate }) {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+function About() {
+  const theme = useTheme();
+  const [copyIcon, setCopyIcon] = useState(
+    <ContentCopyIcon sx={{ color: theme.palette.secondary.dark }} />
+  );
 
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const handleDownload = () => {
-    const fileUrl = "/Buxton_Resume_09.2024_v2.pdf"; // Replace with your file URL
-    const anchor = document.createElement("a");
-    anchor.href = fileUrl;
-    anchor.download = "Buxton_Resume.pdf"; // Replace with the desired file name
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
+  const copyHelper = () => {
+    setCopyIcon(<CheckIcon sx={{ color: theme.palette.secondary.dark }} />);
+    navigator.clipboard.writeText("tbux@vt.edu");
+    setTimeout(() => {
+      setCopyIcon(
+        <ContentCopyIcon sx={{ color: theme.palette.secondary.dark }} />
+      );
+    }, 5000);
   };
 
   const cards = [
     <Card
-      title={<Typography variant="h5">Tyler Buxton</Typography>}
+      title={
+        <div className={styles["description"]}>
+          <Typography variant="h5">Tyler Buxton</Typography>
+          {copyIcon}
+        </div>
+      }
       pic={
         <img
           className={styles["headshot"]}
@@ -45,15 +51,24 @@ function About({ navigate }) {
           alt="Tyler"
           style={{
             objectFit: "cover",
+            borderRadius: "15px",
           }}
         />
       }
       description={
         <Typography variant="subtitle1">Email: tbux@vt.edu</Typography>
       }
+      onClick={copyHelper}
     />,
     <Card
-      title={<Typography variant="h5">Blacksburg, VA</Typography>}
+      title={
+        <div className={styles["description"]}>
+          <Typography variant="h5">Blacksburg, VA</Typography>
+          <LinkIcon
+            sx={{ color: theme.palette.secondary.dark, fontSize: 30 }}
+          />
+        </div>
+      }
       pic={
         <img
           className={styles["headshot"]}
@@ -62,6 +77,7 @@ function About({ navigate }) {
           style={{
             objectFit: "cover",
             objectPosition: "30% 50%",
+            borderRadius: "15px",
           }}
         />
       }
@@ -70,7 +86,14 @@ function About({ navigate }) {
       }
     />,
     <Card
-      title={<Typography variant="h5">Roanoke, VA</Typography>}
+      title={
+        <div className={styles["description"]}>
+          <Typography variant="h5">Roanoke, VA</Typography>
+          <LinkIcon
+            sx={{ color: theme.palette.secondary.dark, fontSize: 30 }}
+          />
+        </div>
+      }
       pic={
         <img
           className={styles["headshot"]}
@@ -79,6 +102,7 @@ function About({ navigate }) {
           style={{
             objectFit: "cover",
             objectPosition: "70% 50%",
+            borderRadius: "15px",
           }}
         />
       }
@@ -87,7 +111,14 @@ function About({ navigate }) {
       }
     />,
     <Card
-      title={<Typography variant="h5">Washington, D.C.</Typography>}
+      title={
+        <div className={styles["description"]}>
+          <Typography variant="h5">Washington, D.C.</Typography>
+          <LinkIcon
+            sx={{ color: theme.palette.secondary.dark, fontSize: 30 }}
+          />
+        </div>
+      }
       pic={
         <img
           className={styles["headshot"]}
@@ -95,6 +126,7 @@ function About({ navigate }) {
           alt="washington"
           style={{
             objectFit: "cover",
+            borderRadius: "15px",
           }}
         />
       }
@@ -103,7 +135,14 @@ function About({ navigate }) {
       }
     />,
     <Card
-      title={<Typography variant="h5">New York City, NY</Typography>}
+      title={
+        <div className={styles["description"]}>
+          <Typography variant="h5">New York City, NY</Typography>
+          <LinkIcon
+            sx={{ color: theme.palette.secondary.dark, fontSize: 30 }}
+          />
+        </div>
+      }
       pic={
         <img
           className={styles["headshot"]}
@@ -111,6 +150,7 @@ function About({ navigate }) {
           alt="new york"
           style={{
             objectFit: "cover",
+            borderRadius: "15px",
           }}
         />
       }
@@ -120,7 +160,50 @@ function About({ navigate }) {
     />,
   ];
 
-  const education = [<Card title={"tyler"} pic={"pic"} description={"des"} />];
+  const education = [
+    <Card
+      title={<Typography variant="h5">Virginia Tech</Typography>}
+      pic={
+        <img
+          className={styles["vt-logo"]}
+          src="/Virginia-Tech-Logo.png"
+          alt="new york"
+          style={{
+            objectFit: "cover",
+            borderRadius: "15px",
+          }}
+        />
+      }
+      description={
+        <div className={styles["description"]}>
+          <Typography variant="subtitle1">
+            M.S. Thesis Computer Science & Applications
+          </Typography>
+          <Typography variant="subtitle1">May 2025</Typography>
+        </div>
+      }
+    />,
+    <Card
+      title={<Typography variant="h5">Virginia Tech</Typography>}
+      pic={
+        <img
+          className={styles["vt-logo"]}
+          src="/Virginia-Tech-Logo.png"
+          alt="new york"
+          style={{
+            objectFit: "cover",
+            borderRadius: "15px",
+          }}
+        />
+      }
+      description={
+        <div className={styles["description"]}>
+          <Typography variant="subtitle1">B.S. Computer Science</Typography>
+          <Typography variant="subtitle1">May 2024</Typography>
+        </div>
+      }
+    />,
+  ];
 
   return (
     <div className={styles["container"]}>

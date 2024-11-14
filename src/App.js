@@ -1,6 +1,6 @@
 import Home from "./pages/Home";
 import Header from "./components/Header";
-import "./App.css";
+import styles from "./App.module.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Button from "@mui/material/Button";
@@ -35,21 +35,29 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
+        <div
+          style={{
+            top: "50%",
+            position: "fixed",
+            fontSize: "min(7vw, 5rem)",
+            color: "#ffffffaa",
+            backgroundColor: "#F44336cc",
+            zIndex: 2,
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          UNDER CONSTRUCTION
+        </div>
         <Header />
-        <div className="white-space"></div>
+        <div className={styles["white-space"]}></div>
 
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/resume" element={<Resume />} />
           <Route path="/about" element={<About />} />
         </Routes>
-        {/* <CssBaseline />
-        <IconButton color="primary">
-          <HomeIcon />
-        </IconButton>
-        <Button variant="contained" color="primary" startIcon={<HomeIcon />}>
-          Home
-        </Button> */}
       </ThemeProvider>
     </BrowserRouter>
   );

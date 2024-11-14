@@ -32,7 +32,7 @@ function Header() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 25rem)");
+    const mediaQuery = window.matchMedia("(max-width: 30rem)");
 
     const handleScreenResize = () => {
       setIsSmallScreen(mediaQuery.matches);
