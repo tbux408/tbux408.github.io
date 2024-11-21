@@ -5,7 +5,7 @@ import styles from "../styles/ResumeButton.module.css";
 import TitleIcon from "@mui/icons-material/Title";
 import DescriptionIcon from "@mui/icons-material/Description";
 
-function ResumeButton({navigate}) {
+function ResumeButton({ navigate }) {
   const theme = useTheme();
   const [color, setColor] = useState(theme.palette.secondary.main);
 
@@ -20,17 +20,21 @@ function ResumeButton({navigate}) {
         className={styles["picture"]}
         style={{
           width: "100%",
-          height: "30rem",
+          height: "692px",
           objectFit: "cover",
         }}
       />
       <div className={styles["info-container"]}>
         <div className={styles["box"]}>
           <div className={styles["title"]}>
-            <Typography variant="h3" gutterBottom>
-              <b>Resume 2024</b>
+            <Typography variant="h3">
+              <b className={styles["title-text"]}>Resume 2024</b>
             </Typography>
-            <Typography variant="subtitle1" gutterBottom>
+            <Typography
+              variant="subtitle1"
+              className={styles["title-sub-text"]}
+              gutterBottom
+            >
               Easy Download.
             </Typography>
 
@@ -41,7 +45,12 @@ function ResumeButton({navigate}) {
                 "--light-color": theme.palette.secondary.dark, // Set light color variable
               }}
             >
-              <Typography variant="subtitle2">Learn more</Typography>
+              <Typography
+                variant="subtitle2"
+                className={styles["title-sub-text"]}
+              >
+                Learn more
+              </Typography>
             </div>
           </div>
           <img className={styles["headshot"]} src="/resume.png" alt="project" />

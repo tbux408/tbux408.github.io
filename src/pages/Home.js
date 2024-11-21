@@ -20,10 +20,10 @@ function Home() {
       <ResumeButton navigate={navigate} />
       <div className={styles["box-container"]}>
         <div className={styles["box-1"]}>
-          <ExperienceButton />
+          <ExperienceButton navigate={navigate} />
         </div>
         <div className={styles["box-2"]}>
-          <ProjectButton />
+          <ProjectButton navigate={navigate} />
         </div>
       </div>
     </div>

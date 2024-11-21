@@ -10,6 +10,11 @@ import HomeIcon from "@mui/icons-material/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Resume from "./pages/Resume";
 import About from "./pages/About";
+import Footer from "./components/Footer";
+import Projects from "./pages/Projects";
+import Experience from "./pages/Experience";
+import Publications from "./pages/Publications";
+import TimeWasters from "./pages/TimeWasters";
 
 const theme = createTheme({
   palette: {
@@ -35,9 +40,9 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <div
+        {/* <div
           style={{
-            top: "50%",
+            bottom: 0,
             position: "fixed",
             fontSize: "min(7vw, 5rem)",
             color: "#ffffffaa",
@@ -49,15 +54,25 @@ function App() {
           }}
         >
           UNDER CONSTRUCTION
-        </div>
+        </div> */}
         <Header />
-        <div className={styles["white-space"]}></div>
+        <div
+          className={styles["white-space"]}
+          style={{
+            backgroundColor: theme.palette.primary.dark,
+          }}
+        ></div>
 
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/resume" element={<Resume />} />
           <Route path="/about" element={<About />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/experience" element={<Experience />} />
+          <Route path="/publications" element={<Publications />} />
+          <Route path="/timewasters" element={<TimeWasters />} />
         </Routes>
+        <Footer />
       </ThemeProvider>
     </BrowserRouter>
   );

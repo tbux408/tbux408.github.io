@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* align-items: flex-start; */
+}
+
+.box {
+  /* width: clamp(1px, 80vw, 80rem); */
+  height: clamp(1px, 40vw, 45rem);
+  margin-right: 1.5rem;
+}
+
+.margin {
+  margin-right: 1.5rem;
+}
+
+.divider {
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}

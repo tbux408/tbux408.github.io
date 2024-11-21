@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import styles from "../styles/CustomTypography.module.css";
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
-  fontSize: "10px",
+  fontSize: "12px",
   fontWeight: 400,
   letterSpacing: "-0.01em",
   fontFamily:
@@ -13,13 +13,26 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   color: theme.palette.secondary.dark,
 }));
 
-function CustomTypography({ message, setChecked, setContent }) {
+function CustomTypography({
+  message,
+  setChecked,
+  setContent,
+  onClick,
+  content,
+  logo = false,
+}) {
   const [hover, setHover] = useState(false);
   const theme = useTheme();
   const handleEnter = () => {
     setHover(true);
-    setChecked(true);
-    setContent(message);
+    if (!logo) {
+      setChecked(true);
+      setContent(content);
+    }
+  };
+  const handleClick = () => {
+    onClick();
+    setChecked(false);
   };
   return (
     <StyledTypography
@@ -30,6 +43,7 @@ function CustomTypography({ message, setChecked, setContent }) {
       style={{
         color: hover && theme.palette.secondary.main,
       }}
+      onClick={handleClick}
     >
       {message}
     </StyledTypography>

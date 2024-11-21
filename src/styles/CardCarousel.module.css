@@ -1,23 +1,30 @@
 .carousel-container {
   position: relative;
   width: 100%;
-  padding: 0 2rem;
+  /* padding-left: 2rem; */
+  /* padding-left: min(5vw, 10rem); */
+
   overflow: hidden; /* Keep the container from showing overflow */
 }
 
 .carousel {
-  padding: 2rem min(5%, 10rem) 2rem min(5%, 10rem);
-
+  padding: 2rem min(5vw, 10rem) 2rem min(5vw, 10rem);
+  /* padding-left: 2rem; */
   display: flex;
   overflow-x: scroll; /* Allow scrolling */
   scroll-behavior: smooth;
-  margin-left: -2rem; /* Adjust margin to allow left side overflow */
+  /* Adjust margin to allow left side overflow */
   margin-right: -2rem; /* Adjust margin to allow right side overflow */
   scrollbar-width: none;
+  scroll-snap-type: x mandatory;
 }
 
+.carousel::-webkit-scrollbar {
+  display: none;
+}
 .card {
-  margin-right: 1rem;
+  /* margin-right: 1rem; */
+  scroll-snap-align: center;
 }
 
 .scroll-button {

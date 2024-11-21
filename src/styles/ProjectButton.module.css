@@ -9,7 +9,7 @@
 }
 
 .info-container {
-  height: 30rem;
+  height: 580px;
   display: flex;
   justify-content: center;
   color: white;
@@ -18,7 +18,7 @@
 .box {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-direction: column;
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
@@ -26,7 +26,7 @@
 
 .headshot {
   border-radius: 5px;
-  width: min(35rem, 95%);
+  width: clamp(15px, 95%, 35rem);
   border-radius: 15px;
   filter: blur(2px);
   transition: filter 1s ease-in-out;
@@ -48,4 +48,12 @@
 }
 .button:hover {
   background-color: var(--light-color); /* Light color on hover */
+}
+
+.title-text {
+  font-size: clamp(15px, 10vw, 3rem);
+}
+
+.title-sub-text {
+  font-size: clamp(5px, 10vw, 1rem);
 }

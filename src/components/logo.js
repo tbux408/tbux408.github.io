@@ -15,16 +15,18 @@ function Logo({ navigate }) {
       onClick={() => {
         navigate("/");
       }}
+      style={{ backgroundColor: color, color: theme.palette.primary.dark }}
     >
-      <svg className={styles.circle} viewBox="0 0 400 400">
+      T
+      {/* <svg className={styles.circle} viewBox="0 0 400 400">
         <defs>
           <mask id="mask">
             <circle cx="200" cy="200" r="200" fill={color} />
             <text
-              x="48%"
-              y="92%"
+              x="50%"
+              y="88%"
               textAnchor="middle"
-              fontSize="380"
+              fontSize="300"
               fontFamily="Arial"
               fontWeight="bold"
               fill="black"
@@ -34,7 +36,7 @@ function Logo({ navigate }) {
           </mask>
         </defs>
         <circle cx="200" cy="200" r="200" fill={color} mask="url(#mask)" />
-      </svg>
+      </svg> */}
     </div>
   );
 }

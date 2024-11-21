@@ -13,6 +13,7 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 function Resume() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -36,7 +37,7 @@ function Resume() {
   const action = (
     <div>
       <IconButton aria-label="download" onClick={handleDownload}>
-        <DownloadForOfflineIcon style={{ fontSize: "40px" }} />
+        <FileDownloadIcon style={{ fontSize: "30px" }} />
       </IconButton>
     </div>
   );

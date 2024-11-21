@@ -18,34 +18,71 @@ const CardCarousel = ({ cards }) => {
 
         setIsAtStart(scrollLeft <= 5);
 
-        // Debugging: Log the current scroll state
-        // console.log(
-        //   `scrollLeft: ${scrollLeft}, scrollWidth: ${scrollWidth}, clientWidth: ${clientWidth}`
-        // );
-
         const isScrollable = scrollWidth > clientWidth;
 
         // Check if at the end
         const isAtEnd =
           !isScrollable || scrollLeft + clientWidth >= scrollWidth - 1;
         setIsAtEnd(isAtEnd);
-
-        // Debugging: Log the isAtEnd state
-        // console.log(`isAtEnd: ${isAtEnd}`);
       }
     };
 
+    const updateScrollMetrics = () => {
+      if (carouselRef.current) {
+        const { scrollWidth, clientWidth } = carouselRef.current;
+
+        console.log("Updated scroll metrics:", { scrollWidth, clientWidth });
+        setIsAtStart(true); // Reset to initial state
+        setIsAtEnd(scrollWidth <= clientWidth);
+      }
+    };
+
+    const getScrollBarWidth = () => {
+      if (carouselRef.current) {
+        const { offsetWidth, clientWidth } = carouselRef.current;
+        return offsetWidth - clientWidth;
+      }
+      return 0;
+    };
+
+    const handleResize = () => {
+      updateScrollMetrics();
+      console.log("Scrollbar width:", getScrollBarWidth());
+    };
+
+    // Attach scroll event listener
     const carouselElement = carouselRef.current;
     if (carouselElement) {
       carouselElement.addEventListener("scroll", handleScroll);
     }
-    handleScroll();
 
-    // Cleanup event listener on unmount
+    // Force initial metrics update
+    setTimeout(updateScrollMetrics, 50); // Delay ensures layout is stabilized
+
+    // Observe resizing for dynamic content changes
+    const observer = new ResizeObserver(handleResize);
+    if (carouselElement) {
+      observer.observe(carouselElement);
+    }
+
+    // Listen for image load events to recalculate dimensions
+    const handleImageLoad = () => updateScrollMetrics();
+    carouselElement?.querySelectorAll("img").forEach((img) => {
+      img.addEventListener("load", handleImageLoad);
+    });
+
+    // Initial log for scrollbar size
+    console.log("Initial scrollbar width:", getScrollBarWidth());
+
+    // Cleanup
     return () => {
       if (carouselElement) {
         carouselElement.removeEventListener("scroll", handleScroll);
+        carouselElement.querySelectorAll("img").forEach((img) => {
+          img.removeEventListener("load", handleImageLoad);
+        });
       }
+      observer.disconnect();
     };
   }, []);
 

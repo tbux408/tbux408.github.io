@@ -3,6 +3,7 @@ import { styled, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import styles from "../styles/Card.module.css";
 import TitleIcon from "@mui/icons-material/Title";
+import { Divider } from "@mui/material";
 
 function Card({ title, pic, description, onClick }) {
   const theme = useTheme();
@@ -11,6 +12,7 @@ function Card({ title, pic, description, onClick }) {
     <div className={styles["container"]} onClick={onClick}>
       {title}
       <div className={styles["box"]}>{pic}</div>
+      <Divider />
       {description}
     </div>
   );

@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  height: 35px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,6 +63,6 @@
 .menu-button {
   display: flex;
   align-items: center;
-  width: 2.5rem;
+  width: 3.5rem;
   justify-content: space-between;
 }

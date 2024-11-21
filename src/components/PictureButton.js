@@ -20,20 +20,28 @@ function PictureButton({ navigate }) {
         alt="torg bridge"
         style={{
           width: "100%",
-          height: "30rem",
+          height: "692px",
           objectFit: "cover",
         }}
       />
       <div className={styles["info-container"]}>
         <div className={styles["box"]}>
-          <Typography variant="h3" gutterBottom>
-            <b>Tyler Buxton</b>
+          <Typography variant="h3">
+            <b className={styles["title"]}>Tyler Buxton</b>
           </Typography>
-          <img
-            className={styles["headshot"]}
-            src="/tylerclear.png"
-            alt="torg bridge"
-          />
+          <div
+            className={styles["headshot-border"]}
+            style={{
+              "--light-color": theme.palette.secondary.dark, // Set light color variable
+            }}
+          >
+            <img
+              className={styles["headshot"]}
+              src="/tyler.jpg"
+              alt="tyler buxton"
+            />
+          </div>
+
           <div
             className={styles["button"]}
             style={{
@@ -41,7 +49,12 @@ function PictureButton({ navigate }) {
               "--light-color": theme.palette.action.light, // Set light color variable
             }}
           >
-            <Typography variant="subtitle2">Learn more</Typography>
+            <Typography
+              variant="subtitle2"
+              className={styles["title-sub-text"]}
+            >
+              Learn more
+            </Typography>
           </div>
         </div>
       </div>
