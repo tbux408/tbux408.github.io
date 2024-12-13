@@ -39,7 +39,7 @@ function Footer() {
           https://www.southernliving.com/roanoke-star-8364330), (Washington
           D.C., https://www.tclf.org/landscapes/washington-monument), (New York
           City,
-          https://www.agoda.com/travel-guides/united-states/new-york-united-states/7-days-in-new-york-city-itinerary/),
+          https://newyorkpass.com/en/things-to-do/where-to-stay-in-new-york-city),
           (Resume, Tyler Buxton), (FedEx Logo,
           https://www.fedex.com/en-us/home.html), (docker logo,
           https://www.docker.com/), (React Logo, https://react.dev/), (Google
@@ -56,7 +56,9 @@ function Footer() {
           (Docker Logo, https://worldvectorlogo.com/logo/docker), (Gemini,
           https://gemini.google.com/), (lambda chi alpha,
           https://www.lambdachi.org/), (phi beta kappa logo,
-          https://www.trinity.edu/sites/phi-beta-kappa)
+          https://www.trinity.edu/sites/phi-beta-kappa), (FIE 2024,
+          https://2024.fie-conference.org/), (CEED,
+          https://eng.vt.edu/ceed.html)
         </Typography>
         <Typography variant="body2">
           2. Privacy Policy: Application does not collect, store, or share any

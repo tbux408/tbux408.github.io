@@ -52,7 +52,7 @@ function ProjectBox({ project }) {
         backColor={"#f5f5f7"}
       />
       <div className={styles["box"]}>
-        <CardCarousel cards={project.cards} />
+        <CardCarousel cards={project.cards} gapS={false} />
 
         <div className={styles["info-box"]}>
           <div className={styles["info-container"]}>

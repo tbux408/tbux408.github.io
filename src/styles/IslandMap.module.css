@@ -1,0 +1,157 @@
+.container {
+  text-align: center;
+  margin: 20px;
+  background-color: #f5f5f7;
+  border-radius: 15px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cell {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  position: relative;
+  user-select: none; /* Disable text selection */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE/Edge */
+  -moz-user-select: none; /* Firefox */
+  padding-bottom: 7px;
+}
+.cell:hover {
+  /* box-shadow: rgba(0, 0, 0, 1) 0px 0px 2px; */
+  /* z-index: 2; */
+}
+
+.cube {
+  border-color: black;
+  border: solid;
+  border-radius: 15px;
+  overflow: auto;
+  width: fit-content;
+  /* margin: 2rem; */
+  max-width: 100%;
+  max-height: 80vh;
+  position: relative;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* flex-wrap: wrap; */
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
+  width: 100%;
+  max-width: 50rem;
+}
+
+.game-box {
+  display: flex;
+  justify-content: center;
+  /* flex-direction: row-reverse; */
+  /* align-items: flex-start; */
+  width: 100%;
+  /* flex-wrap: wrap; */
+  gap: 1.2rem;
+}
+.nowrap-button {
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .game-box {
+    flex-direction: column;
+    align-items: center;
+  }
+  .menu {
+    flex-direction: column;
+  }
+  .cube {
+    min-width: 100%;
+  }
+  .nowrap-button {
+    width: 100%;
+  }
+  .side-bar {
+    width: 100%;
+    flex-direction: column-reverse !important;
+  }
+}
+
+.exchange-page {
+  background-color: #444447cc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100%;
+  width: 100%;
+}
+
+.restart {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  padding-bottom: 1.2rem;
+}
+
+.shop-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f5f5f7;
+  border-radius: 15px;
+  font-size: 50px;
+  padding: 1.2rem;
+}
+
+.shops-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  padding-top: 1.2rem;
+}
+
+.shop-cube {
+  border-color: black;
+  border: solid;
+  border-radius: 15px;
+  overflow-y: auto;
+  width: fit-content;
+  /* margin: 2rem; */
+  width: 804px;
+  height: 944px;
+  max-width: 100%;
+  max-height: 80vh;
+}
+
+.menu-button {
+  position: sticky;
+  top: 0;
+  right: 0;
+  background-color: lightblue;
+  z-index: 1; /* Ensure it appears above content */
+  text-align: right;
+  width: 0px;
+  height: 0px;
+}
+.menu-button-test {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}

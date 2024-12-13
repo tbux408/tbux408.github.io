@@ -3,7 +3,7 @@ import styles from "../styles/CardCarousel.module.css";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-const CardCarousel = ({ cards }) => {
+const CardCarousel = ({ cards, gapS = true }) => {
   const carouselRef = useRef(null);
   const cardRef = useRef(null);
   const [isAtStart, setIsAtStart] = useState(true);
@@ -31,7 +31,7 @@ const CardCarousel = ({ cards }) => {
       if (carouselRef.current) {
         const { scrollWidth, clientWidth } = carouselRef.current;
 
-        console.log("Updated scroll metrics:", { scrollWidth, clientWidth });
+        // console.log("Updated scroll metrics:", { scrollWidth, clientWidth });
         setIsAtStart(true); // Reset to initial state
         setIsAtEnd(scrollWidth <= clientWidth);
       }
@@ -47,7 +47,7 @@ const CardCarousel = ({ cards }) => {
 
     const handleResize = () => {
       updateScrollMetrics();
-      console.log("Scrollbar width:", getScrollBarWidth());
+      // console.log("Scrollbar width:", getScrollBarWidth());
     };
 
     // Attach scroll event listener
@@ -72,7 +72,7 @@ const CardCarousel = ({ cards }) => {
     });
 
     // Initial log for scrollbar size
-    console.log("Initial scrollbar width:", getScrollBarWidth());
+    // console.log("Initial scrollbar width:", getScrollBarWidth());
 
     // Cleanup
     return () => {
@@ -93,7 +93,7 @@ const CardCarousel = ({ cards }) => {
       const marginRight = parseFloat(cardStyle.marginRight);
 
       // Total width including margins
-      const totalWidth = cardRef.current.offsetWidth + marginLeft + marginRight;
+      const totalWidth = cardRef.current.offsetWidth + marginLeft + marginRight + 24;
       setCardWidth(totalWidth);
     }
   }, [cards]);
@@ -116,7 +116,11 @@ const CardCarousel = ({ cards }) => {
       onMouseEnter={() => setHidden(false)}
       onMouseLeave={() => setHidden(true)}
     >
-      <div className={styles["carousel"]} ref={carouselRef}>
+      <div
+        className={styles["carousel"]}
+        style={{ gap: gapS ? "1.5rem" : "0" }}
+        ref={carouselRef}
+      >
         {cards.map((card, index) => (
           <div
             className={styles["card"]}

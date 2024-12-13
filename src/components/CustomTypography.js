@@ -20,6 +20,7 @@ function CustomTypography({
   onClick,
   content,
   logo = false,
+  navigate = "",
 }) {
   const [hover, setHover] = useState(false);
   const theme = useTheme();

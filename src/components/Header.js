@@ -114,21 +114,26 @@ const projects = [
 const experience = [
   {
     title: "Experience",
-    content: [{ name: "Coming Soon...", link: "/experience?id=1" }],
+    content: [
+      { name: "2024", link: "/experience?id=2024" },
+      { name: "2023", link: "/experience?id=2023" },
+      { name: "2022", link: "/experience?id=2022" },
+      { name: "2021", link: "/experience?id=2021" },
+    ],
   },
 ];
 
 const publications = [
   {
     title: "Publications",
-    content: [{ name: "Coming Soon...", link: "/publications?id=1" }],
+    content: [{ name: "Coming Soon...", link: "/publications" }],
   },
 ];
 
 const timewasters = [
   {
     title: "Time Wasters",
-    content: [{ name: "Coming Soon...", link: "//timewasters?id=1" }],
+    content: [{ name: "Coming Soon...", link: "/timewasters" }],
   },
 ];
 
@@ -189,6 +194,7 @@ function Header() {
               message={<Logo navigate={navigate} />}
               setChecked={setChecked}
               setContent={() => null}
+              navigate={"/"}
               onClick={() => navigate("/")}
               logo={true}
             />
@@ -198,6 +204,7 @@ function Header() {
                   message={"About"}
                   setChecked={setChecked}
                   setContent={setContent}
+                  navigate={"/about"}
                   onClick={() => navigate("/about")}
                   content={about}
                 />
@@ -206,12 +213,14 @@ function Header() {
                   setChecked={setChecked}
                   setContent={setContent}
                   onClick={() => navigate("/resume")}
+                  navigate={"/resume"}
                   content={resume}
                 />
                 <CustomTypography
                   message={"Projects"}
                   setChecked={setChecked}
                   setContent={setContent}
+                  navigate={"/projects"}
                   onClick={() => navigate("/projects")}
                   content={projects}
                 />
@@ -219,6 +228,7 @@ function Header() {
                   message={"Experience"}
                   setChecked={setChecked}
                   setContent={setContent}
+                  navigate={"/experience"}
                   onClick={() => navigate("/experience")}
                   content={experience}
                 />
@@ -226,6 +236,7 @@ function Header() {
                   message={"Publications"}
                   setChecked={setChecked}
                   setContent={setContent}
+                  navigate={"/publications"}
                   onClick={() => navigate("/publications")}
                   content={publications}
                 />
@@ -233,6 +244,7 @@ function Header() {
                   message={"Time Wasters"}
                   setChecked={setChecked}
                   setContent={setContent}
+                  navigate={"/timewasters"}
                   onClick={() => navigate("/timewasters")}
                   content={timewasters}
                 />

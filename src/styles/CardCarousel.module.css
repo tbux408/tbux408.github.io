@@ -14,7 +14,7 @@
   overflow-x: scroll; /* Allow scrolling */
   scroll-behavior: smooth;
   /* Adjust margin to allow left side overflow */
-  margin-right: -2rem; /* Adjust margin to allow right side overflow */
+  /* margin-right: -2rem; */
   scrollbar-width: none;
   scroll-snap-type: x mandatory;
 }

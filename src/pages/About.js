@@ -197,11 +197,12 @@ function About() {
       pic={
         <img
           className={styles["fullCard"]}
-          src="/newyork.jpg"
+          src="/newyork.avif"
           alt="new york"
           style={{
             objectFit: "cover",
             borderRadius: "15px",
+            objectPosition: "70% 50%",
           }}
         />
       }
@@ -626,7 +627,7 @@ function About() {
       <div className={styles["box"]}>
         <CardCarousel cards={skills} />
       </div>
-      <TitleCard message={"Groups"} id={5} action={""} />
+      <TitleCard message={"Organizations"} id={5} action={""} />
       <div className={styles["box"]}>
         <CardCarousel cards={groups} />
       </div>
