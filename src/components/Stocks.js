@@ -74,11 +74,11 @@ function Stocks({ crypto, money, setMoney, handleSettingValues, setCrypto }) {
         </div>
         <div className={styles["title-box"]}>
           <Typography variant="h6" className={styles["todays-value"]}>
-            🪙{crypto.stock[crypto.stock.length - 1]}
+            💰{crypto.stock[crypto.stock.length - 1]}
             {formatChange(calculateChange(crypto.stock))}
           </Typography>
           <Typography variant="h6" className={styles["todays-value"]}>
-            🪙{crypto.owned * crypto.stock[crypto.stock.length - 1]}
+            💰{crypto.owned * crypto.stock[crypto.stock.length - 1]}
             {formatChange(
               crypto.owned * crypto.stock[crypto.stock.length - 1] -
                 crypto.invested
@@ -86,7 +86,7 @@ function Stocks({ crypto, money, setMoney, handleSettingValues, setCrypto }) {
           </Typography>
         </div>
         {/* <Typography variant="h6" className={styles["todays-value"]}>
-        {crypto.title} 🪙{crypto.stock}
+        {crypto.title} 💰{crypto.stock}
       </Typography>
       <Button variant="outlined" onClick={handleClickOpen}>
         Open dialog

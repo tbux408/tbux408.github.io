@@ -55,6 +55,17 @@ function Experience() {
     };
   }, [location.search]);
 
+  const year2025 = [
+    {
+      title: "Graduate Teaching Assistant",
+      description: "Comparative Languages",
+      time: "Spring",
+      pic: "/Virginia-Tech-Logo.png",
+      picStyle: "vt-logo",
+      alt: "vt logo",
+    },
+  ];
+
   const year2024 = [
     {
       title: "Graduate Teaching Assistant",
@@ -178,7 +189,7 @@ function Experience() {
       alt: "vt logo",
     },
   ];
-
+  const [collapse25, setCollapse25] = useState(true);
   const [collapse24, setCollapse24] = useState(true);
   const [collapse23, setCollapse23] = useState(true);
   const [collapse22, setCollapse22] = useState(true);
@@ -187,6 +198,46 @@ function Experience() {
   return (
     <div className={styles["container"]}>
       <TitleCard message={"Experience"} action={""} />
+      <Divider variant="middle">
+        <Chip
+          id="2025"
+          label="2025"
+          size="small"
+          onClick={() => setCollapse25(!collapse25)}
+        />
+      </Divider>
+      <Collapse in={collapse25} className={styles["collapse"]}>
+        <div className={styles["year-container"]}>
+          {year2025.map((c, i) => (
+            <Card
+              key={i}
+              title={
+                <div className={styles["description"]}>
+                  <Typography variant="h5">{c.title}</Typography>
+                </div>
+              }
+              pic={
+                <img
+                  className={styles[c.picStyle]}
+                  src={c.pic}
+                  alt={c.alt}
+                  style={{
+                    borderRadius: "15px",
+                  }}
+                />
+              }
+              description={
+                <div className={styles["description"]}>
+                  <Typography variant="subtitle1">{c.description}</Typography>
+                  <Typography variant="subtitle1">{c.time}</Typography>
+                </div>
+              }
+              onClick={() => null}
+              full={true}
+            />
+          ))}
+        </div>
+      </Collapse>
       <Divider variant="middle">
         <Chip
           id="2024"

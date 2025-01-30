@@ -18,7 +18,8 @@
 
 .youtube {
   height: 100%;
-  width: clamp(1px, 80vw, 80rem);
+  /* width: clamp(1px, 80vw, 80rem); */
+  width: 100%;
 }
 
 .comingsoon {

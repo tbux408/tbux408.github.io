@@ -3,6 +3,7 @@ import styles from "../styles/IslandMap.module.css";
 import {
   Box,
   Button,
+  Divider,
   LinearProgress,
   Tooltip,
   Typography,
@@ -12,10 +13,12 @@ import ForestIcon from "@mui/icons-material/Forest";
 import MapGrid from "./MapGrid";
 import { useTheme } from "@mui/material/styles";
 import Stocks from "./Stocks";
+import House from "./House";
+import HelpIcon from "@mui/icons-material/Help";
 
 const IslandMap = () => {
   const theme = useTheme();
-
+  // const [clicked, setClicked] = useState(0);
   const [gridSize, setGridSize] = useState(20); // Default grid size
   const [grid, setGrid] = useState([]);
   const [islands, setIslands] = useState({});
@@ -26,10 +29,11 @@ const IslandMap = () => {
   const [menu, setMenu] = useState(false);
 
   const [wood, setWood] = useState(0);
-  const [energy, setEnergy] = useState(0);
+  const [energy, setEnergy] = useState(100);
   const [rock, setRock] = useState(0);
   const [money, setMoney] = useState(0);
   const [shop, setShop] = useState([{}, {}, {}]);
+  const [property, setProperty] = useState([]);
 
   const browns = ["#C19A6B", "#954535", "#7B3F00", "#6F4E37", "#814141"];
   const greens = ["#75c172", "#a2ea9e", "#C19A6B", "#4f7219"];
@@ -37,6 +41,8 @@ const IslandMap = () => {
   const generateBlue = () => {
     return blues[Math.floor(Math.random() * 3)];
   };
+
+  const [showResource, setShowResource] = useState([]);
 
   // Generate a grid with random 0s and 1s
   const generateGrid = (size) => {
@@ -127,7 +133,7 @@ const IslandMap = () => {
       row.map((cell, cIdx) => {
         const island = findIsland(islandMap, rIdx, cIdx);
         const terrain =
-          cell === 0
+          cell === 0 || islandMap[island].length <= 5
             ? "water"
             : greens[island % greens.length] === "#C19A6B"
             ? "sand"
@@ -149,10 +155,11 @@ const IslandMap = () => {
           ystructureloc:
             flexDirections[Math.floor(Math.random() * flexDirections.length)],
           active: true,
+          resources: calculateResources(structure, islandDeduction[island - 1]),
         };
       })
     );
-    // console.log(newGridInfo);
+    console.log(newGridInfo);
     handleSettingValues(setGridInfo, "gridInfo", newGridInfo);
     setNumIslands(islandsCount);
   };
@@ -249,12 +256,21 @@ const IslandMap = () => {
     } else {
       generateShop();
     }
-
     const crypto = JSON.parse(localStorage.getItem("crypto"));
     if (crypto) {
       setCrypto(crypto);
     } else {
       initStock();
+    }
+    const fortune500 = JSON.parse(localStorage.getItem("fortune500"));
+    if (fortune500) {
+      setFortune500(fortune500);
+    } else {
+      initFortuneStock();
+    }
+    const property = JSON.parse(localStorage.getItem("property"));
+    if (property) {
+      setProperty(property);
     }
   };
 
@@ -273,14 +289,17 @@ const IslandMap = () => {
   }, []);
 
   const restart = () => {
-    setPlusAnimations([]);
+    setShowResource([]);
     const matrix = generateGrid(gridSize);
     countIslands(matrix);
     generateShop();
-    handleSettingValues(setEnergy, "energy", energy + 50 <= 100 ? 50 : 100);
-    crypto.stock = simulateWeek(crypto.stock);
-    handleSettingValues(setCrypto, "crypto", crypto);
-
+    handleSettingValues(
+      setEnergy,
+      "energy",
+      energy + 50 <= 100 ? energy + 50 : 100
+    );
+    simulateWeeksHelper();
+    setHoverMessage("");
     setMenu(false);
     setLocked(false);
   };
@@ -292,46 +311,103 @@ const IslandMap = () => {
   const flexDirections = ["center", "flex-start", "flex-end"];
 
   const [hoverMessage, setHoverMessage] = useState("");
+  const houseImage = {
+    1: "🏢",
+    2: "🏫",
+    3: "🏬",
+    4: "🏠",
+    5: "🏡",
+  };
+  const typeOfHouse = {
+    1: "Studio Apartment",
+    2: "Condominium",
+    3: "Townhouse",
+    4: "Cottage",
+    5: "Farmhouse",
+  };
   const setHoverMessageHelper = (cell) => {
+    console.log(cell);
+
     setHoverMessage(
-      <div>
-        <Typography variant="h6" gutterBottom>
-          {cell.structure === "none"
-            ? cell.terrain.charAt(0).toUpperCase() + cell.terrain.slice(1)
-            : cell.structure.charAt(0).toUpperCase() + cell.structure.slice(1)}
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          gutterBottom
-          style={{ color: cell.discount < 0 ? "red" : "lightgreen" }}
-        >
-          Island Bonus:
-          <b> {cell.discount}</b>%
-        </Typography>
-      </div>
+      cell.structure === "house" ? (
+        <House
+          money={money}
+          typeOfHouse={typeOfHouse}
+          cell={cell}
+          houseImage={houseImage}
+          handleSettingValues={handleSettingValues}
+          setProperty={setProperty}
+          property={property}
+          setGridInfo={setGrid}
+          gridInfo={gridInfo}
+          setMoney={setMoney}
+        />
+      ) : (
+        <div>
+          <Typography variant="h6" gutterBottom>
+            {cell.structure === "none"
+              ? cell.terrain.charAt(0).toUpperCase() + cell.terrain.slice(1)
+              : cell.structure.charAt(0).toUpperCase() +
+                cell.structure.slice(1)}
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            gutterBottom
+            style={{ color: cell.discount < 0 ? "red" : "lightgreen" }}
+          >
+            Island Bonus:
+            <b> {cell.discount}</b>%
+          </Typography>
+        </div>
+      )
     );
   };
 
-  const [plusAnimations, setPlusAnimations] = useState([]);
-
-  const handlePlusAnimation = (e, message) => {
-    const { clientX, clientY } = e;
-
-    // Add a new animation to the array
-
-    const newAnimations = [
-      ...plusAnimations,
-      { id: Date.now(), message, x: clientX, y: clientY },
-    ];
-    console.log(plusAnimations);
-    setPlusAnimations(newAnimations);
-    setTimeout(() => {
-      setPlusAnimations((prev) => prev.slice(1));
-    }, 2000);
+  const calculateResources = (structure, bonus) => {
+    switch (structure) {
+      case "evergreen":
+      case "cactus":
+      case "palm tree":
+      case "tree":
+        const price = Math.floor(Math.random() * 15 + 5);
+        const wdPrice = Math.floor(1 + price + (price * bonus) / 10);
+        return wdPrice;
+      case "rock":
+        const rPrice = Math.floor(Math.random() * 4 + 1);
+        const rdPrice = Math.floor(1 + rPrice + (rPrice * bonus) / 10);
+        return rdPrice;
+      case "big rock":
+        const brPrice = Math.floor(Math.random() * 7 + 1);
+        const brdPrice = Math.floor(1 + brPrice + (brPrice * bonus) / 10);
+        return brdPrice;
+      case "small rock":
+        const srPrice = Math.floor(Math.random() * 2 + 1);
+        const srdPrice = Math.floor(1 + srPrice + (srPrice * bonus) / 10) + 1;
+        return srdPrice;
+      case "house":
+        const houseRooms = Math.floor(Math.random() * 5 + 1);
+        const houseEnergy = Math.floor(Math.random() * 10 + 5);
+        const housePrice = (houseRooms + houseEnergy) * 15000;
+        return { rooms: houseRooms, energy: houseEnergy, price: housePrice };
+      default:
+        return 0;
+    }
   };
 
-  const handleClick = (event, cell) => {
+  const handleClick = (event, cell, row, col) => {
+    // console.log(cell);
     if (!cell.active || energy < 0 || locked) {
+      return;
+    }
+
+    if (cell.structure !== "house" && cell.structure !== "parthenon") {
+      const newShowResource = [...showResource, `${row}, ${col}`];
+      setShowResource(newShowResource);
+      setTimeout(() => {
+        setShowResource((prev) => prev.slice(1));
+      }, 2000);
+    }
+    if (cell.structure === null) {
       return;
     }
 
@@ -340,46 +416,26 @@ const IslandMap = () => {
       case "cactus":
       case "palm tree":
       case "tree":
-        const price = Math.floor(Math.random() * 15 + 5);
-        const wdPrice = Math.floor(price + (price * cell.discount) / 100);
-        handleSettingValues(setWood, "wood", wood + wdPrice);
+        handleSettingValues(setWood, "wood", wood + cell.resources);
         handleSettingValues(setEnergy, "energy", energy - 10);
-        handlePlusAnimation(event, "+" + wdPrice + " 🪵");
         cell.active = false;
         handleSettingValues(setGridInfo, "gridInfo", gridInfo);
-
         break;
       case "rock":
-        const rPrice = Math.floor(Math.random() * 4 + 1);
-        const rdPrice = Math.floor(rPrice + (rPrice * cell.discount) / 100);
-        handleSettingValues(setRock, "rock", rock + rdPrice);
-        handlePlusAnimation(event, "+" + rdPrice + " 🪨");
+        handleSettingValues(setRock, "rock", rock + cell.resources);
         handleSettingValues(setEnergy, "energy", energy - 15);
-
         cell.active = false;
         handleSettingValues(setGridInfo, "gridInfo", gridInfo);
-
         break;
       case "big rock":
-        const brPrice = Math.floor(Math.random() * 7 + 1);
-        const brdPrice = Math.floor(brPrice + (brPrice * cell.discount) / 100);
-        // setRock(rock + brdPrice);
-        handleSettingValues(setRock, "rock", rock + brdPrice);
-        handlePlusAnimation(event, "+" + brdPrice + " 🪨");
+        handleSettingValues(setRock, "rock", rock + cell.resources);
         handleSettingValues(setEnergy, "energy", energy - 17);
-
         cell.active = false;
         handleSettingValues(setGridInfo, "gridInfo", gridInfo);
-
         break;
       case "small rock":
-        const srPrice = Math.floor(Math.random() * 2 + 1);
-        const srdPrice =
-          Math.floor(srPrice + (srPrice * cell.discount) / 100) + 1;
-        handleSettingValues(setRock, "rock", rock + srdPrice);
-        handlePlusAnimation(event, "+" + srdPrice + " 🪨");
+        handleSettingValues(setRock, "rock", rock + cell.resources);
         handleSettingValues(setEnergy, "energy", energy - 10);
-
         cell.active = false;
         handleSettingValues(setGridInfo, "gridInfo", gridInfo);
         break;
@@ -403,20 +459,24 @@ const IslandMap = () => {
 
     return (
       <div className={styles["shop-container"]} key={i}>
+        <Typography variant="h6" gutterBottom>
+          Market {i + 1}
+        </Typography>
         <Typography>
           {s.sold * s.min}/{s.capacity * s.min}
         </Typography>
         {s.type === "wood" ? "🪵" : "🪨"}
-        <Typography>
-          price {s.type === "wood" ? "🪵" : "🪨"}
-          {s.min}
-        </Typography>
+        <Typography>Bid: 💰{s.price}</Typography>
         <Button
           variant="outlined"
           onClick={sell}
-          disabled={s.type === "wood" ? wood < s.min : rock < s.min}
+          disabled={
+            (s.type === "wood" ? wood < s.min : rock < s.min) ||
+            s.sold * s.min >= s.capacity * s.min
+          }
         >
-          sell 🪙{s.price}
+          sell {s.type === "wood" ? "🪵" : "🪨"}
+          {s.min}
         </Button>
       </div>
     );
@@ -424,7 +484,7 @@ const IslandMap = () => {
 
   const handleEnergyRefill = () => {
     if (energy < 100 && money >= 15) {
-      handleSettingValues(setEnergy, "energy", 100);
+      handleSettingValues(setEnergy, "energy", energy < 0 ? 50 : energy + 50);
       handleSettingValues(setMoney, "money", money - 15);
     }
   };
@@ -432,16 +492,47 @@ const IslandMap = () => {
   useEffect(() => {
     if (!start && energy <= 0) {
       setMenu(true);
-      setLocked(true);
+      // setLocked(true);
     }
   }, [energy, start]);
 
   const [crypto, setCrypto] = useState([]);
   const simulateWeek = (stock) => {
-    const neg = Math.round(Math.random());
-    const variation = Math.floor(
-      Math.random() * (stock[stock.length - 1] * 0.5 + 10)
-    );
+    // const neg = Math.round(Math.random());
+    // const variation = Math.floor(
+    //   Math.random() * (stock[stock.length - 1] * 0.5 + 10)
+    // );
+    // const newStock = (neg ? -1 : 1) * variation + stock[stock.length - 1];
+    const lastValue = stock[stock.length - 1]; // Get the current stock value
+    const fluctuation = Math.floor((Math.random() - 0.5) * 20); // Random integer between -5 and +5
+    const newStock = Math.max(0, lastValue + fluctuation); // Calculate new value, ensure it's non-negative
+
+    if (newStock < 0) {
+      return [...stock, -newStock];
+    } else if (newStock === 0) {
+      return [...stock, 1];
+    }
+    return [...stock, newStock];
+  };
+
+  const initStock = () => {
+    const startCrypto = Math.floor(Math.random() * 10 + 45);
+    let newCrypto = [startCrypto];
+    for (let i = 0; i < 10; i++) {
+      newCrypto = simulateWeek(newCrypto);
+    }
+    handleSettingValues(setCrypto, "crypto", {
+      stock: newCrypto,
+      owned: 0,
+      invested: 0,
+      title: "🫎 T-Bux Crypto",
+    });
+  };
+
+  const [fortune500, setFortune500] = useState([]);
+  const simulateWeekFortune = (stock) => {
+    const neg = generateOdd(400);
+    const variation = Math.floor(Math.random() * 2 + 1);
     const newStock = (neg ? -1 : 1) * variation + stock[stock.length - 1];
     if (newStock < 0) {
       return [...stock, -newStock];
@@ -450,35 +541,60 @@ const IslandMap = () => {
     }
     return [...stock, newStock];
   };
-  const initStock = () => {
-    const start = Math.floor(Math.random() * 10 + 45);
-    let stock = [start];
+
+  const initFortuneStock = () => {
+    let newFortune = [1];
     for (let i = 0; i < 10; i++) {
-      stock = simulateWeek(stock);
+      newFortune = simulateWeekFortune(newFortune);
     }
-    handleSettingValues(setCrypto, "crypto", {
-      stock: stock,
+    handleSettingValues(setFortune500, "fortune500", {
+      stock: newFortune,
       owned: 0,
       invested: 0,
-      title: "🫎 T-Bux Crypto",
+      title: "💎 Fortune 500",
     });
+  };
+
+  const simulateWeeksHelper = () => {
+    crypto.stock = simulateWeek(crypto.stock);
+    handleSettingValues(setCrypto, "crypto", crypto);
+
+    fortune500.stock = simulateWeekFortune(fortune500.stock);
+    handleSettingValues(setFortune500, "fortune500", fortune500);
   };
 
   return (
     <div className={styles["container"]}>
+      <Tooltip
+        title={
+          <Typography variant="subtitle1" styles={{ wordBreak: "break-word" }}>
+            Island of Fortune is a dynamic strategy game featuring virtually
+            infinite map combinations, offering a unique experience every time
+            you play. Your goal is to gather resources like rocks and wood, sell
+            them for in-game currency, and maximize your collection before your
+            energy runs out. Expand your fortune by buying and selling property
+            or trading in the stock market, making strategic decisions to grow
+            your wealth. With endless possibilities, Island of Fortune is a
+            captivating blend of resource management, exploration, and economic
+            strategy ensuring that you waste some time.
+          </Typography>
+        }
+      >
+        <Typography variant="h4">
+          {"Island of Fortune "} <HelpIcon />
+        </Typography>
+      </Tooltip>
+
       <div className={styles["menu"]}>
-        <Button
-          variant="outlined"
-          className={styles["nowrap-button"]}
-          onClick={() => console.log(crypto)}
-        >
-          🪵 {wood}
+        {/* {clicked} */}
+        <Button variant="outlined" className={styles["nowrap-button"]}>
+          🪵 {wood.toLocaleString()}
         </Button>
         <Button variant="outlined" className={styles["nowrap-button"]}>
-          🪨 {rock}
+          🪨 {rock.toLocaleString()}
         </Button>
         <Button variant="outlined" className={styles["nowrap-button"]}>
-          🪙 {money}
+          💰 {money.toLocaleString()}
         </Button>
         <Box sx={{ width: "100%" }}>
           <LinearProgress
@@ -492,8 +608,8 @@ const IslandMap = () => {
       <div className={styles["game-box"]}>
         <div className={styles["side-bar"]}>
           <div
-            className={styles["cube"]}
-            style={{ width: "15rem", height: "5rem" }}
+            className={styles["side-bar-cube"]}
+            style={{ width: "15rem", minHeight: "5rem" }}
           >
             {hoverMessage ? (
               hoverMessage
@@ -504,17 +620,37 @@ const IslandMap = () => {
             )}
           </div>
 
-          <div className={styles["cube"]} style={{ width: "15rem" }}>
-            <Typography variant="h6" gutterBottom>
-              Stocks
-              <Stocks
-                crypto={crypto}
-                money={money}
-                setMoney={setMoney}
-                handleSettingValues={handleSettingValues}
-                setCrypto={setCrypto}
-              />
-            </Typography>
+          <div className={styles["side-bar-cube"]} style={{ width: "15rem" }}>
+            <Typography variant="h6">Stocks</Typography>
+            <Stocks
+              crypto={crypto}
+              money={money}
+              setMoney={setMoney}
+              handleSettingValues={handleSettingValues}
+              setCrypto={setCrypto}
+            />
+            <Stocks
+              crypto={fortune500}
+              money={money}
+              setMoney={setMoney}
+              handleSettingValues={handleSettingValues}
+              setCrypto={setFortune500}
+            />
+          </div>
+          <div className={styles["side-bar-cube"]} style={{ width: "15rem" }}>
+            <Typography variant="h6">Property</Typography>
+            <Divider />
+            <div className={styles["property-list"]}>
+              {property.map((p) => (
+                <div
+                  style={{
+                    fontSize: 50,
+                  }}
+                >
+                  {houseImage[p.rooms]}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -534,7 +670,7 @@ const IslandMap = () => {
                   sx={{ backgroundColor: theme.palette.action.light }}
                   disabled={energy >= 100 || money < 15}
                 >
-                  Full🔋/🪙15
+                  Half🔋/💰15
                 </Button>
                 <Button
                   variant="contained"
@@ -555,26 +691,11 @@ const IslandMap = () => {
             setHoverMessage={setHoverMessage}
             setMenu={setMenu}
             energy={energy}
+            showResource={showResource}
+            houseImage={houseImage}
           />
         )}
       </div>
-      {plusAnimations.map((animation) => (
-        <div
-          key={animation.id}
-          style={{
-            position: "absolute",
-            top: animation.y - 40,
-            left: animation.x - 20,
-            fontSize: "24px",
-            color: "white",
-            fontWeight: "bold",
-            pointerEvents: "none",
-            zIndex: 0,
-          }}
-        >
-          {animation.message}
-        </div>
-      ))}
     </div>
   );
 };

@@ -19,8 +19,34 @@ const MapGrid = ({
   setHoverMessage,
   setMenu,
   energy,
+  showResource,
+  houseImage,
 }) => {
-  const MapIcon = ({ islandColor, children, xstructureloc, ystructureloc }) => {
+  const woodRockMap = (structure) => {
+    switch (structure) {
+      case "evergreen":
+      case "cactus":
+      case "palm tree":
+      case "tree":
+        return "🪵";
+      case "rock":
+      case "big rock":
+      case "small rock":
+        return "🪨";
+      default:
+        return "";
+    }
+  };
+
+  const MapIcon = ({
+    islandColor,
+    children,
+    xstructureloc,
+    ystructureloc,
+    cell,
+    rIdx,
+    cIdx,
+  }) => {
     return (
       <div
         style={{
@@ -31,6 +57,19 @@ const MapGrid = ({
         }}
         className={styles["cell"]}
       >
+        {showResource.includes(`${rIdx}, ${cIdx}`) && (
+          <div
+            className={styles["plus-container"]}
+            style={
+              rIdx === 0
+                ? { bottom: "-1rem", left: cIdx === 19 ? "-3rem" : 0 }
+                : { top: "-1rem", left: cIdx === 19 ? "-3rem" : 0 }
+            }
+          >
+            +{cell.resources}
+            {woodRockMap(cell.structure)}
+          </div>
+        )}
         {children}
       </div>
     );
@@ -44,7 +83,8 @@ const MapGrid = ({
     island,
     xstructureloc,
     ystructureloc,
-    active
+    active,
+    cell
   ) => {
     // Water
 
@@ -79,13 +119,17 @@ const MapGrid = ({
             islandColor={islandColor}
             xstructureloc={xstructureloc}
             ystructureloc={ystructureloc}
+            cell={cell}
+            rIdx={rIdx}
+            cIdx={cIdx}
           >
             {active ? (
               <div
                 style={{
                   textShadow: "1px 8px 10px rgba(0, 0, 0, 0.5)",
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 20,
+                  cursor: "pointer",
                 }}
               >
                 🌴
@@ -93,7 +137,7 @@ const MapGrid = ({
             ) : (
               <div
                 style={{
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 8,
                   padding: 6,
                 }}
@@ -111,13 +155,17 @@ const MapGrid = ({
             islandColor={islandColor}
             xstructureloc={xstructureloc}
             ystructureloc={ystructureloc}
+            cell={cell}
+            rIdx={rIdx}
+            cIdx={cIdx}
           >
             {active ? (
               <div
                 style={{
                   textShadow: "1px 8px 10px rgba(0, 0, 0, 0.5)",
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 20,
+                  cursor: "pointer",
                 }}
               >
                 🌵
@@ -125,7 +173,7 @@ const MapGrid = ({
             ) : (
               <div
                 style={{
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 8,
                   padding: 6,
                 }}
@@ -144,13 +192,17 @@ const MapGrid = ({
             islandColor={islandColor}
             xstructureloc={xstructureloc}
             ystructureloc={ystructureloc}
+            cell={cell}
+            rIdx={rIdx}
+            cIdx={cIdx}
           >
             {active ? (
               <div
                 style={{
                   textShadow: "1px 8px 5px rgba(0, 0, 0, 0.5)",
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 20,
+                  cursor: "pointer",
                 }}
               >
                 🌲
@@ -159,7 +211,7 @@ const MapGrid = ({
               <div
                 style={{
                   textShadow: "1px 2px 5px rgba(0, 0, 0, 0.5)",
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 10,
                   padding: 5,
                   paddingBottom: 2,
@@ -178,13 +230,17 @@ const MapGrid = ({
             islandColor={islandColor}
             xstructureloc={xstructureloc}
             ystructureloc={ystructureloc}
+            cell={cell}
+            rIdx={rIdx}
+            cIdx={cIdx}
           >
             {active ? (
               <div
                 style={{
                   textShadow: "1px 8px 5px rgba(0, 0, 0, 0.5)",
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 20,
+                  cursor: "pointer",
                 }}
               >
                 🌳
@@ -193,7 +249,7 @@ const MapGrid = ({
               <div
                 style={{
                   textShadow: "1px 2px 5px rgba(0, 0, 0, 0.5)",
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 10,
                   padding: 5,
                   paddingBottom: 2,
@@ -212,13 +268,17 @@ const MapGrid = ({
             islandColor={islandColor}
             xstructureloc={xstructureloc}
             ystructureloc={ystructureloc}
+            cell={cell}
+            rIdx={rIdx}
+            cIdx={cIdx}
           >
             {active ? (
               <div
                 style={{
                   textShadow: "0px 0px 2px rgba(0, 0, 0, 0.9)",
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 10,
+                  cursor: "pointer",
                 }}
               >
                 🪨
@@ -226,7 +286,7 @@ const MapGrid = ({
             ) : (
               <div
                 style={{
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 8,
                   padding: 2,
                 }}
@@ -243,13 +303,17 @@ const MapGrid = ({
             islandColor={islandColor}
             xstructureloc={xstructureloc}
             ystructureloc={ystructureloc}
+            cell={cell}
+            rIdx={rIdx}
+            cIdx={cIdx}
           >
             {active ? (
               <div
                 style={{
                   textShadow: "0px 0px 2px rgba(0, 0, 0, 0.9)",
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 7,
+                  cursor: "pointer",
                 }}
               >
                 🪨
@@ -257,7 +321,7 @@ const MapGrid = ({
             ) : (
               <div
                 style={{
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 8,
                   padding: 2,
                 }}
@@ -274,13 +338,17 @@ const MapGrid = ({
             islandColor={islandColor}
             xstructureloc={xstructureloc}
             ystructureloc={ystructureloc}
+            cell={cell}
+            rIdx={rIdx}
+            cIdx={cIdx}
           >
             {active ? (
               <div
                 style={{
                   textShadow: "0px 0px 2px rgba(0, 0, 0, 0.9)",
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 13,
+                  cursor: "pointer",
                 }}
               >
                 🪨
@@ -288,7 +356,7 @@ const MapGrid = ({
             ) : (
               <div
                 style={{
-                  zIndex: 0,
+                  zIndex: 1,
                   fontSize: 8,
                   padding: 2,
                 }}
@@ -305,13 +373,17 @@ const MapGrid = ({
             islandColor={islandColor}
             xstructureloc={xstructureloc}
             ystructureloc={ystructureloc}
+            cell={cell}
+            rIdx={rIdx}
+            cIdx={cIdx}
           >
             <div
               style={{
-                fontSize: 30,
+                fontSize: 25,
+                cursor: "pointer",
               }}
             >
-              🏡
+              {houseImage[cell.resources.rooms]}
             </div>
           </MapIcon>
         );
@@ -323,6 +395,9 @@ const MapGrid = ({
             islandColor={islandColor}
             xstructureloc={xstructureloc}
             ystructureloc={ystructureloc}
+            cell={cell}
+            rIdx={rIdx}
+            cIdx={cIdx}
           >
             <div
               style={{
@@ -343,6 +418,15 @@ const MapGrid = ({
             className={styles["cell"]}
           ></div>
         );
+    }
+  };
+
+  const handleClickHelper = (event, cell, rIdx, cIdx) => {
+    if (cell.structure === "none") {
+      setHoverMessageHelper(cell);
+    } else {
+      setHoverMessageHelper(cell);
+      handleClick(event, cell, rIdx, cIdx);
     }
   };
 
@@ -371,7 +455,7 @@ const MapGrid = ({
         {gridInfo.map((row, rIdx) =>
           row.map((cell, cIdx) => {
             return cell.terrain === "water" ? (
-              <div key={`${rIdx}-${cIdx}`}>
+              <div key={`${rIdx}-${cIdx}`} onClick={() => setHoverMessage("")}>
                 {terrain(
                   rIdx,
                   cIdx,
@@ -379,15 +463,19 @@ const MapGrid = ({
                   cell.structure,
                   cell.xstructureloc,
                   cell.ystructureloc,
-                  cell.active
+                  cell.active,
+                  cell
                 )}
               </div>
             ) : (
               <div
                 key={`${rIdx}-${cIdx}`}
-                onClick={(e) => handleClick(e, cell)}
-                onMouseEnter={() => setHoverMessageHelper(cell)}
-                onMouseLeave={() => setHoverMessage("")}
+                // onMouseEnter={() => setHoverMessageHelper(cell)}
+                // onMouseLeave={() => setHoverMessage("")}
+                onClick={(e) => handleClickHelper(e, cell, rIdx, cIdx)}
+                // onMouseEnter={(event) => handleEvent(event, cell)}
+                // onMouseLeave={(event) => handleEvent(event, cell)}
+                // onClick={(event) => handleEvent(event, cell)}
               >
                 {terrain(
                   rIdx,
@@ -397,7 +485,8 @@ const MapGrid = ({
                   cell.island,
                   cell.xstructureloc,
                   cell.ystructureloc,
-                  cell.active
+                  cell.active,
+                  cell
                 )}
               </div>
               //   </Tooltip>

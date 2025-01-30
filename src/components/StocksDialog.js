@@ -41,7 +41,7 @@ function StocksDialog({
     const value = event.target.value;
     const numericValue = value.replace(/[^0-9]/g, "");
 
-    setBuy(numericValue);
+    setBuy(Number(numericValue));
   };
 
   const decrementBuy = () => {
@@ -65,7 +65,7 @@ function StocksDialog({
     const value = event.target.value;
     const numericValue = value.replace(/[^0-9]/g, "");
 
-    setSell(numericValue);
+    setSell(Number(numericValue));
   };
 
   const decrementSell = () => {
@@ -148,13 +148,8 @@ function StocksDialog({
 
   return (
     <div>
-      <Dialog
-        onClose={handleClose}
-        open={open}
-      >
-        <DialogTitle sx={{ m: 0, p: 2 }}>
-          {title}
-        </DialogTitle>
+      <Dialog onClose={handleClose} open={open}>
+        <DialogTitle sx={{ m: 0, p: 2 }}>{title}</DialogTitle>
         <IconButton
           onClick={handleClose}
           sx={(theme) => ({
@@ -177,7 +172,7 @@ function StocksDialog({
             ]}
             yAxis={[
               {
-                label: "Price 🪙",
+                label: "Price 💰",
               },
             ]}
             series={[
@@ -185,19 +180,20 @@ function StocksDialog({
                 label: "Price ",
                 curve: "linear",
                 data: stock,
-                valueFormatter: (element) => `🪙${element}`,
+                valueFormatter: (element) => `💰${element}`,
                 color: calculateChange(stock) < 0 ? "red" : "green",
+                showMark: false,
               },
             ]}
             width={500}
             height={300}
           />
           <Typography variant="h6" className={styles["todays-value"]}>
-            Today's Value: 🪙{stock[stock.length - 1]}{" "}
+            Today's Value: 💰{stock[stock.length - 1]}{" "}
             {formatChange(calculateChange(stock))}
           </Typography>
           <Typography variant="h6" className={styles["todays-value"]}>
-            Your Stock: 🪙{owned * stock[stock.length - 1]}
+            Your Stock: 💰{owned * stock[stock.length - 1]}
             {formatChange(owned * stock[stock.length - 1] - invested)}
           </Typography>
           <div className={styles["buy-stock"]}>
@@ -226,7 +222,7 @@ function StocksDialog({
               }
               onClick={handlePurchase}
             >
-              Buy 🪙 {buy * stock[stock.length - 1]}
+              Buy 💰 {buy * stock[stock.length - 1]}
             </Button>
           </div>
           <div className={styles["buy-stock"]}>
@@ -254,7 +250,7 @@ function StocksDialog({
               disabled={owned < sell || sell === 0 || sell === ""}
               onClick={handleSelling}
             >
-              Sell 🪙 {sell * stock[stock.length - 1]}
+              Sell 💰 {sell * stock[stock.length - 1]}
             </Button>
           </div>
         </DialogContent>

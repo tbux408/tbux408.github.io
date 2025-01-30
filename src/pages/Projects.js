@@ -85,9 +85,10 @@ function Projects() {
         }
         description={
           <Typography variant="subtitle1" styles={{ wordBreak: "break-word" }}>
-            Gitit helps students learn core computer science concepts through
-            interactive visualizations. The tools features interactive exercises
-            for Command Line and Git.
+            Gitit is an innovative tool designed to help students master core
+            computer science concepts with engaging, interactive visualizations.
+            Featuring hands-on exercises for Command Line and Git, Gitit makes
+            learning practical, engaging, and effective.
           </Typography>
         }
       />,
@@ -101,10 +102,12 @@ function Projects() {
         }
         description={
           <Typography variant="subtitle1">
-            Gitit enables the creation of online courses, providing instructors
-            with the ability to assign customized exercises to their students.
-            Instructors can track student progress, offering insights into
-            performance and engagement to better support students' learning.
+            Gitit empowers educators to create dynamic online courses with
+            personalized exercises tailored to their students' needs.
+            Instructors can effortlessly track progress and gain valuable
+            insights into student performance and engagement. Gitit provides
+            instructors a tool to effectively support and enhance student
+            learning.
           </Typography>
         }
       />,
@@ -122,7 +125,10 @@ function Projects() {
             difficulty for their curriculum, enabling them to address specific
             learning objectives and skill levels. These personalized activities
             help engage students more effectively and reinforce critical early
-            practical concepts through visual interaction.
+            practical concepts through visual interaction. Additionally, Gitit
+            offers a rich database of pre-created exercises, making it easy for
+            anyone to start learning and for instructors to assign ready-made
+            activities.
           </Typography>
         }
         last={true}
@@ -163,7 +169,13 @@ function Projects() {
         }
         description={
           <Typography variant="subtitle1" styles={{ wordBreak: "break-word" }}>
-            Questle? is a reverse 20 questions game powered by AI.
+            Questle? is an exciting reverse 20 Questions game powered by Google
+            Gemini, blending the nostalgia of the classic handheld 20 Questions
+            game with the addictive charm of modern Wordle-style gameplay. Each
+            day, players face a new challenge as they try to guess the word of
+            the day by asking strategic yes-or-no questions. With its unique
+            fusion of tradition and innovation, Questle? offers a fresh,
+            interactive puzzle experience.
           </Typography>
         }
         last="true"
@@ -203,7 +215,16 @@ function Projects() {
         }
         description={
           <Typography variant="subtitle1" styles={{ wordBreak: "break-word" }}>
-            Optimal property acquisition tool that uses machine learning.
+            Hotel Scouter is an advanced property acquisition tool that
+            leverages machine learning to optimize investment decisions in the
+            hospitality industry. Designed with predictive analytics, the
+            platform provides Marriott executives and analysts with ranked
+            location recommendations based on factors such as average daily
+            rates and proximity to popular attractions. With a modular
+            architecture, integration of APIs like Google, and an intuitive
+            front-end powered by Google Maps, Hotel Scouter streamlines
+            decision-making for strategic property acquisitions in the U.S.,
+            delivering data-driven insights to maximize return on investment.
           </Typography>
         }
       />,
@@ -217,9 +238,11 @@ function Projects() {
         }
         description={
           <Typography variant="subtitle1" styles={{ wordBreak: "break-word" }}>
-            Finds all hotels and points of interest in a given area across the
-            United States. Predicts the average price of a room and displays the
-            actual price for easy comparison.
+            Hotel Scouter identifies all hotels and nearby points of interest
+            within a specified area, offering a detailed view of the local
+            landscape. Using advanced machine learning, it predicts the average
+            daily room rates and compares them to actual prices, enabling quick
+            and informed decisions for optimal property acquisition.
           </Typography>
         }
         last="true"
@@ -252,8 +275,14 @@ function Projects() {
         }
         description={
           <Typography variant="subtitle1" styles={{ wordBreak: "break-word" }}>
-            Allows anyone to safely get a ride from a departure and destination
-            by adding their information to a queue.{" "}
+            Lambda Drive is a tailored management system designed specifically
+            for fraternities, streamlining member organization and task
+            assignments. Its standout feature is a secure ride-sharing system
+            that allows users to safely arrange transportation by entering their
+            departure and destination details into a dynamic queue. By
+            prioritizing safety and efficiency, Lambda Drive provides a seamless
+            solution for managing responsibilities and ensuring reliable
+            transportation within campus communities.
           </Typography>
         }
       />,
@@ -263,8 +292,12 @@ function Projects() {
         }
         description={
           <Typography variant="subtitle1" styles={{ wordBreak: "break-word" }}>
-            Event editor allows an admin to create an event and assign drivers
-            and monitors.
+            Lambda Drive is a versatile fraternity management system designed to
+            streamline event planning and member coordination. At its core is a
+            calendar system, allowing administrators to create and manage events
+            effortlessly. The event editor enables admins to assign specific
+            responsibilities to members, ensuring clear communication and
+            accountability within the organization.
           </Typography>
         }
         last="true"
@@ -289,10 +322,13 @@ function Projects() {
           />
         }
         description={
-          <Typography
-            variant="subtitle1"
-            styles={{ wordBreak: "break-word" }}
-          ></Typography>
+          <Typography variant="subtitle1" styles={{ wordBreak: "break-word" }}>
+            The Book Warehouse is a class project showcasing a fully functional
+            bookstore system with an integrated database and user-friendly
+            interface. Users can explore books across various categories, add
+            their selections to a shopping cart, and seamlessly complete the
+            checkout process.
+          </Typography>
         }
       />,
       <CardPicture
@@ -327,7 +363,13 @@ function Projects() {
         pic={<img className={[styles["image"]]} src="/eft1.png" alt="eft 1" />}
         description={
           <Typography variant="subtitle1" styles={{ wordBreak: "break-word" }}>
-            User signup with JWT authentication.
+            The AI Chatbot system provides a seamless user signup process,
+            enabling participants to create accounts by supplying their name,
+            email, and password. Each user is authenticated using JSON Web
+            Tokens (JWTs), which securely encode session data to ensure privacy
+            and security. This approach not only protects user credentials but
+            also facilitates scalable, efficient access to the chatbot's
+            personalized features and services.
           </Typography>
         }
       />,
@@ -335,18 +377,32 @@ function Projects() {
         pic={<img className={[styles["image"]]} src="/eft2.png" alt="eft 2" />}
         description={
           <Typography variant="subtitle1" styles={{ wordBreak: "break-word" }}>
-            AI chatbot designed to implement episodic future thinking cue text
-            generation for the treatment of obesity and type 2 diabetes.
+            The AI Chatbot is a tool designed to implement episodic future
+            thinking (EFT) cue text generation, aimed at supporting the
+            treatment of obesity and type 2 diabetes. Powered by OpenAI’s large
+            language models (LLMs), the chatbot delivers personalized, AI-driven
+            guidance, helping users visualize future scenarios that encourage
+            healthier decision-making and lifestyle changes. This innovative
+            approach enhances accessibility and scalability, offering a
+            powerful, research-backed resource for improving long-term health
+            outcomes.
           </Typography>
         }
       />,
       <CardPicture
         pic={<img className={[styles["image"]]} src="/eft4.png" alt="eft 4" />}
         description={
-          <Typography
-            variant="subtitle1"
-            styles={{ wordBreak: "break-word" }}
-          ></Typography>
+          <Typography variant="subtitle1" styles={{ wordBreak: "break-word" }}>
+            At the conclusion of each interaction with the AI Chatbot, users are
+            guided through a comprehensive usability assessment designed to
+            evaluate their experience. This assessment, based on established
+            metrics like the System Usability Scale (SUS), gathers valuable
+            feedback on user satisfaction, interface design, and overall
+            functionality. The insights collected are essential for refining the
+            chatbot, ensuring it remains user-friendly and effective in
+            delivering episodic future thinking interventions for improved
+            health outcomes.
+          </Typography>
         }
       />,
       <CardPicture

@@ -26,7 +26,6 @@ import LayersIcon from "@mui/icons-material/Layers";
 import { useLocation } from "react-router-dom";
 import IslandMap from "../components/IslandMap";
 
-
 function TimeWasters() {
   const theme = useTheme();
   const location = useLocation();

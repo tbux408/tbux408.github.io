@@ -69,7 +69,7 @@ function Footer() {
 
         <div className={styles["odd-ends-align"]}>
           <Typography variant="body2">
-            Author @ 2024 Tyler Buxton. tbux@vt.edu
+            Author @ 2025  Tyler Buxton. tbux@vt.edu
           </Typography>
           <Typography variant="body2">United States</Typography>{" "}
         </div>

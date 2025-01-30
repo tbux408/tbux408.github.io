@@ -115,10 +115,11 @@ const experience = [
   {
     title: "Experience",
     content: [
-      { name: "2024", link: "/experience?id=2024" },
-      { name: "2023", link: "/experience?id=2023" },
-      { name: "2022", link: "/experience?id=2022" },
-      { name: "2021", link: "/experience?id=2021" },
+      { name: "New Year 2025", link: "/experience?id=2025" },
+      { name: "Year of 2024", link: "/experience?id=2024" },
+      { name: "Year of 2023", link: "/experience?id=2023" },
+      { name: "Year of 2022", link: "/experience?id=2022" },
+      { name: "Year of 2021", link: "/experience?id=2021" },
     ],
   },
 ];
@@ -133,7 +134,7 @@ const publications = [
 const timewasters = [
   {
     title: "Time Wasters",
-    content: [{ name: "Coming Soon...", link: "/timewasters" }],
+    content: [{ name: "Island of Fortune", link: "/timewasters" }],
   },
 ];
 

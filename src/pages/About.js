@@ -25,6 +25,8 @@ import Tooltip from "@mui/material/Tooltip";
 import TerminalIcon from "@mui/icons-material/Terminal";
 import LayersIcon from "@mui/icons-material/Layers";
 import { useLocation } from "react-router-dom";
+import CardFullMoreInfo from "../components/CardFullMoreInfo";
+import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 
 function About() {
   const theme = useTheme();
@@ -75,11 +77,11 @@ function About() {
   }, [location.search]);
 
   const cards = [
-    <CardFull
+    <CardFullMoreInfo
       title={
         <div className={styles["description"]}>
           <Typography variant="h5">Tyler Buxton</Typography>
-          {emailIcon1}
+          <UnfoldMoreIcon />
         </div>
       }
       pic={
@@ -93,9 +95,11 @@ function About() {
           }}
         />
       }
-      description={
-        <Typography variant="subtitle1">Email: tbux@vt.edu</Typography>
-      }
+      description={`I am a Master’s student in Computer Science at Virginia Tech, specializing in Computer Science Education. My research focuses on creating web application tools to enhance learning experiences.
+
+I am currently serving as a graduate teaching assistant for CS3304. After graduating in the spring, I am starting my career in software engineering, focusing on full-stack development with a strong interest in frontend technologies. 
+
+My goal is to develop my career and skills while building impactful software solutions.`}
       onClick={() => copyHelper(setEmailIcon1)}
       color={"white"}
     />,
@@ -120,9 +124,7 @@ function About() {
           }}
         />
       }
-      description={
-        <Typography variant="subtitle1">Area of Interest</Typography>
-      }
+      description={<Typography variant="subtitle1"></Typography>}
       onClick={(event) =>
         handleLinkClick(event, "https://maps.app.goo.gl/huAw6wiTuKHKKLXW9")
       }
@@ -149,9 +151,7 @@ function About() {
           }}
         />
       }
-      description={
-        <Typography variant="subtitle1">Area of Interest</Typography>
-      }
+      description={<Typography variant="subtitle1"></Typography>}
       onClick={(event) =>
         handleLinkClick(event, "https://maps.app.goo.gl/oJXauBhzwjb6kENFA")
       }
@@ -177,9 +177,7 @@ function About() {
           }}
         />
       }
-      description={
-        <Typography variant="subtitle1">Area of Interest</Typography>
-      }
+      description={<Typography variant="subtitle1"></Typography>}
       onClick={(event) =>
         handleLinkClick(event, "https://maps.app.goo.gl/zWhiEp2jX82GdUr86")
       }
@@ -206,9 +204,7 @@ function About() {
           }}
         />
       }
-      description={
-        <Typography variant="subtitle1">Area of Interest</Typography>
-      }
+      description={<Typography variant="subtitle1"></Typography>}
       onClick={(event) =>
         handleLinkClick(event, "https://maps.app.goo.gl/nKmsUmyYUyk2CopSA")
       }
