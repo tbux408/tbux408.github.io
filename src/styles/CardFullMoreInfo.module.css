@@ -56,6 +56,7 @@
 
   cursor: pointer;
 }
+
 .description:hover {
   background-color: #161617cc;
   backdrop-filter: blur(10px);

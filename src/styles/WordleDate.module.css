@@ -1,0 +1,21 @@
+.container {
+  width: 100%;
+}
+
+.search-container {
+  /* width: 100%; */
+  padding: 0 2rem 2rem 2rem;
+}
+
+.list {
+  padding-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
+  gap: 10px; /* Adjust spacing between items */
+  max-height: 10rem;
+  overflow-y: auto;
+}
+.list-item {
+  text-align: center;
+  /* flex: 1; */
+}

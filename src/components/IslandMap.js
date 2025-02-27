@@ -16,7 +16,7 @@ import Stocks from "./Stocks";
 import House from "./House";
 import HelpIcon from "@mui/icons-material/Help";
 
-const IslandMap = () => {
+const IslandMap = ({ id }) => {
   const theme = useTheme();
   // const [clicked, setClicked] = useState(0);
   const [gridSize, setGridSize] = useState(20); // Default grid size
@@ -564,7 +564,7 @@ const IslandMap = () => {
   };
 
   return (
-    <div className={styles["container"]}>
+    <div className={styles["container"]} id={id}>
       <Tooltip
         title={
           <Typography variant="subtitle1" styles={{ wordBreak: "break-word" }}>
@@ -641,8 +641,9 @@ const IslandMap = () => {
             <Typography variant="h6">Property</Typography>
             <Divider />
             <div className={styles["property-list"]}>
-              {property.map((p) => (
+              {property.map((p, i) => (
                 <div
+                  key={i}
                   style={{
                     fontSize: 50,
                   }}

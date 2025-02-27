@@ -245,7 +245,11 @@ function HeaderSearch({ info, setChecked }) {
     },
     {
       name: "Time Wasters",
-      criteria: ["Time Wasters", "coming soon..."],
+      criteria: [
+        "Time Wasters",
+        "Island of Fortune",
+        "Tylerdle",
+      ],
       link: "/timewasters",
     },
   ];
