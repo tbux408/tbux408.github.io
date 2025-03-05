@@ -25,6 +25,7 @@ import TerminalIcon from "@mui/icons-material/Terminal";
 import LayersIcon from "@mui/icons-material/Layers";
 import { useLocation } from "react-router-dom";
 import IslandMap from "../components/IslandMap";
+import Tylerdle from "../components/Tylerdle";
 
 function TimeWasters() {
   const theme = useTheme();
@@ -57,7 +58,8 @@ function TimeWasters() {
     <div className={styles["container"]}>
       <TitleCard message={"Time Wasters"} id={1} action={""} />
       {/* <div className={styles["comingsoon"]}>Coming Soon...</div> */}
-      <IslandMap />
+      <Tylerdle id={"tylerdle"}/>
+      <IslandMap id={"islandoffortune"}/>
     </div>
   );
 }

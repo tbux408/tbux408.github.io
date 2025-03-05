@@ -17,6 +17,7 @@ function CardFullMoreInfo({
   const [isExpanded, setIsExpanded] = useState(false);
 
   const onClickDiv = (event) => {
+    
     event.stopPropagation();
     setIsExpanded(true);
   };

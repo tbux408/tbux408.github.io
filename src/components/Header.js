@@ -134,7 +134,10 @@ const publications = [
 const timewasters = [
   {
     title: "Time Wasters",
-    content: [{ name: "Island of Fortune", link: "/timewasters" }],
+    content: [
+      { name: "Tylerdle", link: "/timewasters?id=tylerdle" },
+      { name: "Island of Fortune", link: "/timewasters?id=islandoffortune" },
+    ],
   },
 ];
 
