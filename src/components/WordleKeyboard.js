@@ -18,7 +18,7 @@ function WordleKeyboard({
       guesses
         .slice(0, currentWord)
         .some((guess) =>
-          guess.text
+          guess
             .split("")
             .some((c, ci) => c === text && c === word.split("")[ci])
         )
@@ -28,7 +28,7 @@ function WordleKeyboard({
       guesses
         .slice(0, currentWord)
         .some((guess) =>
-          guess.text
+          guess
             .split("")
             .some((c, ci) => c === text && word.split("").includes(c))
         )
@@ -37,7 +37,7 @@ function WordleKeyboard({
     } else if (
       guesses
         .slice(0, currentWord)
-        .some((guess) => guess.text.split("").some((c) => c === text))
+        .some((guess) => guess.split("").some((c) => c === text))
     ) {
       return "#16161730";
     }

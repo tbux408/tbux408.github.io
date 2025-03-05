@@ -35,6 +35,10 @@ function WordleDate({
   setTempDate,
   history,
   wordList,
+  setEnableKeys,
+  guesses,
+  wordToGuess,
+  currentWord,
 }) {
   const theme = useTheme();
 
@@ -45,11 +49,22 @@ function WordleDate({
     console.log(newValue);
     setTabsValue(newValue);
   };
-  // const [regex, setRegex] = useState("");
-  // const handleRegex = (event) => {
-  //   console.log(event);
-  //   setRegex(event.target.value);
-  // };
+  const [regex, setRegex] = useState("");
+  const [regexExp, setRegexExp] = useState(null);
+  const handleRegex = (event) => {
+    // console.log(event);
+    setRegex(event.target.value);
+    if (event.target.value === "") {
+      setRegexExp(null);
+    } else {
+      try {
+        const newRegex = new RegExp(event.target.value, "i");
+        setRegexExp(newRegex);
+      } catch {
+        console.error("Invalid regex");
+      }
+    }
+  };
 
   function ServerDay(props) {
     const { day, outsideCurrentMonth, ...other } = props;
@@ -87,21 +102,77 @@ function WordleDate({
     );
   }
 
-  function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+  // Probably not the best way to do this
+  // eslint-disable-next-line no-extend-native
+  Array.prototype.rSlice = function (size = 15) {
+    if (this.length <= size) return this;
 
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`vertical-tabpanel-${index}`}
-        aria-labelledby={`vertical-tab-${index}`}
-        {...other}
-      >
-        {children}
-      </div>
-    );
-  }
+    const startIndex = Math.floor(Math.random() * (this.length - size + 1));
+    return this.slice(startIndex, startIndex + size);
+  };
+
+  const handleClickResetRegex = () => {
+    let correct = ["", "", "", "", ""];
+    let notIn = ["", "", "", "", ""];
+    let globalNotIn = "";
+    let globalIn = "";
+    for (let i = 0; i < currentWord; i++) {
+      for (let j = 0; j < guesses[i].length; j++) {
+        const guessLetter = guesses[i].split("")[j];
+        const wordLetter = wordToGuess.split("")[j];
+        if (guessLetter === wordLetter) {
+          correct[j] = wordToGuess.split("")[j];
+          globalIn = globalIn
+            .split("")
+            .filter((c) => c !== guessLetter)
+            .join("");
+        } else if (wordToGuess.split("").includes(guessLetter)) {
+          if (!notIn[j].split("").includes(guessLetter)) {
+            notIn[j] = notIn[j].concat(guessLetter);
+          }
+          if (
+            !correct.includes(guessLetter) &&
+            !globalIn.split("").includes(guessLetter)
+          ) {
+            globalIn = globalIn.concat(guessLetter);
+          }
+        } else if (!globalNotIn.split("").includes(guessLetter)) {
+          globalNotIn = globalNotIn.concat(guessLetter);
+        }
+      }
+    }
+    let retRegex = "";
+    for (let i = 0; i < globalIn.length; i++) {
+      retRegex = retRegex.concat(
+        "(?=.*" + globalIn.split("")[i].toUpperCase() + ")"
+      );
+    }
+    retRegex = retRegex.concat("^");
+    for (let i = 0; i < correct.length; i++) {
+      if (correct[i] !== "") {
+        retRegex = retRegex.concat(correct[i].toUpperCase());
+      } else if (notIn[i] !== "" || globalNotIn !== "") {
+        const notInString = notIn[i]
+          .toUpperCase()
+          .concat(globalNotIn.toUpperCase());
+        retRegex = retRegex.concat(
+          "[^!" +
+            notInString
+              .split("")
+              .sort((a, b) => a.localeCompare(b))
+              .join("") +
+            "]"
+        );
+      } else {
+        retRegex = retRegex.concat(".");
+      }
+    }
+    retRegex = retRegex.concat("$");
+    //combine not in and in
+    console.log(retRegex);
+    setRegex(retRegex);
+    setRegexExp(new RegExp(retRegex, "i"));
+  };
 
   return (
     <div className={styles["container"]}>
@@ -123,6 +194,7 @@ function WordleDate({
           value="Calendar"
         />
         <Tab
+          onClick={handleClickResetRegex}
           icon={<ManageSearchIcon />}
           iconPosition="start"
           label="Dictionary"
@@ -130,61 +202,95 @@ function WordleDate({
           value="Dictionary"
         />
       </Tabs>
-      <TabPanel value={tabsValue} index={"Calendar"}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DateCalendar
-            sx={{ width: "100%" }}
-            minDate={dayjs("2024-01-01")}
-            maxDate={dayjs()}
-            slots={{ day: ServerDay }} // Custom rendering for days
-            views={["year", "month", "day"]}
-            value={tempDate}
-            onChange={(newDate, selectionState) => {
-              if (selectionState === "finish") {
-                setSelectedDateHelper(newDate); // Ensures state updates correctly
-              }
-            }}
-            onYearChange={(newYear) => setTempDate(newYear)}
-            onMonthChange={(newMonth) => setTempDate(newMonth)}
-          />
-        </LocalizationProvider>
-      </TabPanel>
-      <TabPanel value={tabsValue} index={"Dictionary"}>
-        <div className={styles["search-container"]}>
-          <FormControl fullWidth variant="standard">
-            <InputLabel htmlFor="standard-adornment-password">
-              Search Dictionary
-            </InputLabel>
-            <Input
-              fullWidth
-              id="regex-input"
-              // value={regex}
-              // onChange={handleRegex}
-              // type={showPassword ? 'text' : 'password'}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label={"Reset Regex"}
-                    title={"Reset Regex"}
-                    // onClick={handleClickShowPassword}
-                    // onMouseDown={handleMouseDownPassword}
-                    // onMouseUp={handleMouseUpPassword}
-                  >
-                    <RestoreIcon />
-                  </IconButton>
-                </InputAdornment>
-              }
+      {tabsValue === "Calendar" && (
+        <div>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DateCalendar
+              sx={{ width: "100%" }}
+              minDate={dayjs("2024-01-01")}
+              maxDate={dayjs()}
+              slots={{ day: ServerDay }} // Custom rendering for days
+              views={["year", "month", "day"]}
+              value={tempDate}
+              onChange={(newDate, selectionState) => {
+                if (selectionState === "finish") {
+                  setSelectedDateHelper(newDate); // Ensures state updates correctly
+                }
+              }}
+              onYearChange={(newYear) => setTempDate(newYear)}
+              onMonthChange={(newMonth) => setTempDate(newMonth)}
             />
-          </FormControl>
-          <div className={styles["list"]}>
-            {Object.values(["wordLe", "wordLe", "wordLe"]).map((word, i) => (
-              <div className={styles["list-item"]} key={i}>
-                <Typography variant="h5">{word.toUpperCase()}</Typography>
-              </div>
-            ))}
+          </LocalizationProvider>
+        </div>
+      )}
+      {tabsValue === "Dictionary" && (
+        <div>
+          <div className={styles["search-container"]}>
+            <FormControl fullWidth variant="standard">
+              <InputLabel htmlFor="standard-adornment-password">
+                Search Dictionary
+              </InputLabel>
+              <Input
+                fullWidth
+                id="regex-input"
+                value={regex}
+                onChange={handleRegex}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label={"Reset Regex"}
+                      title={"Reset Regex"}
+                      onClick={handleClickResetRegex}
+                    >
+                      <RestoreIcon />
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <Typography variant="caption">
+              Results:{" "}
+              {regexExp
+                ? Object.values(wordList)
+                    .filter((word) => regexExp.test(word))
+                    .slice(0, 4999)
+                    .filter((word, index, self) => self.indexOf(word) === index)
+                    .slice(0, 4096)
+                    .length.toLocaleString()
+                : "16,384+"}
+              {" words"}
+            </Typography>
+            <div className={styles["list"]}>
+              {regexExp
+                ? Object.values(wordList)
+                    .filter((word) => regexExp.test(word))
+                    .rSlice(20)
+                    .filter((word, index, self) => self.indexOf(word) === index)
+                    .rSlice(15)
+                    .sort((a, b) => a.localeCompare(b))
+                    .map((word, i) => (
+                      <div className={styles["list-item"]} key={i}>
+                        <Typography variant="h5">
+                          {word.toUpperCase()}
+                        </Typography>
+                      </div>
+                    ))
+                : Object.values(wordList)
+                    .rSlice(20)
+                    .filter((word, index, self) => self.indexOf(word) === index)
+                    .rSlice(15)
+                    .sort((a, b) => a.localeCompare(b))
+                    .map((word, i) => (
+                      <div className={styles["list-item"]} key={i}>
+                        <Typography variant="h5">
+                          {word.toUpperCase()}
+                        </Typography>
+                      </div>
+                    ))}
+            </div>
           </div>
         </div>
-      </TabPanel>
+      )}
     </div>
   );
 }

@@ -15,6 +15,8 @@ import WordleSquare from "./WordleSquare";
 import WordleKeyboard from "./WordleKeyboard";
 import ShuffleIcon from "@mui/icons-material/Shuffle";
 import WordleDate from "./WordleDate";
+import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
+import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 
 function Tylerdle({ id }) {
   const theme = useTheme();
@@ -23,39 +25,28 @@ function Tylerdle({ id }) {
   const midRow = ["a", "s", "d", "f", "g", "h", "j", "k", "l"];
   const botRow = ["enter", "z", "x", "c", "v", "b", "n", "m", "delete"];
 
-  // const searchWord = async () => {
-  //   const word = "hamza";
-  //   const response = await fetch(
-  //     `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-  //   );
-  //   if (!response.ok) {
-  //     throw new Error("Word not found.");
-  //   }
-  //   const data = await response.json();
-  // };
+  const [guesses, setGuesses] = useState(["", "", "", "", "", ""]);
+  const [currentWord, setCurrentWord] = useState(0);
 
-  const [guesses, setGuesses] = useState([
-    { text: "_", submitted: false },
-    { text: "", submitted: false },
-    { text: "", submitted: false },
-    { text: "", submitted: false },
-    { text: "", submitted: false },
-    { text: "", submitted: false },
-  ]);
+  const [word, setWord] = useState("start");
+  const [wordList, setWordList] = useState({});
 
   const [enableKeys, setEnableKeys] = useState(false);
-  const [wordList, setWordList] = useState({});
-  const [currentWord, setCurrentWord] = useState(0);
-  const [word, setWord] = useState("start");
   const [message, setMessage] = useState("");
-  const [history, setHistory] = useState([]);
+
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [tempDate, setTempDate] = useState(dayjs());
+
+  const [history, setHistory] = useState([]);
+
+  const [checkedCollapse, setCheckedCollapse] = useState(false);
 
   const setMessageHelper = (m) => {
     setMessage(m);
     setTimeout(() => {
-      setMessage(null);
+      if (message === m) {
+        setMessage(null);
+      }
     }, 5000);
   };
 
@@ -68,13 +59,41 @@ function Tylerdle({ id }) {
     return startDate.add(dayNumber - 1, "day");
   };
 
+  const initialize = (json) => {
+    setWordList(json);
+    setWord(json[dateToDayNumber(selectedDate)]);
+
+    // Handle Local Storage Data
+    const nCurrentDay = localStorage.getItem("TYLERDLE_CURRENT_DAY");
+    const nCurrentWord = Number(localStorage.getItem("TYLERDLE_CURRENT_WORD"));
+    const nHistory = JSON.parse(localStorage.getItem("TYLERDLE_HISTORY"));
+    const nGuesses = JSON.parse(localStorage.getItem("TYLERDLE_GUESSES"));
+    console.log(nCurrentWord, nGuesses);
+    // console.log(nGuesses);
+    if (
+      nCurrentDay &&
+      dayjs(nCurrentDay).isSame(selectedDate, "day") &&
+      nCurrentWord &&
+      nGuesses &&
+      nGuesses[0].text === undefined
+    ) {
+      setCurrentWord(nCurrentWord);
+      setGuesses(nGuesses);
+    }
+
+    if (nHistory) {
+      setHistory(nHistory);
+    }
+  };
+
   useEffect(() => {
     console.log("fetching JSON");
     const fetchFile = async () => {
       try {
         const response = await fetch("/wordle.json");
         const jsonFile = await response.json();
-        setWordList(jsonFile); // Store it once
+        initialize(jsonFile);
+        // Store it once
       } catch (error) {
         console.error("Error fetching JSON:", error);
       }
@@ -84,33 +103,33 @@ function Tylerdle({ id }) {
   }, []); // Fetch only on mount
 
   // Separate effect to update word when selectedDate changes
-  useEffect(() => {
-    if (wordList[dateToDayNumber(selectedDate)] === undefined) return; // Avoid running before JSON loads
-    // console.log(dateToDayNumber(selectedDate));
-    // console.log(wordList[dateToDayNumber(selectedDate)]);
-    console.log("Initializing");
-    setWord(wordList[dateToDayNumber(selectedDate)]);
+  // useEffect(() => {
+  //   if (wordList[dateToDayNumber(selectedDate)] === undefined) return; // Avoid running before JSON loads
+  //   // console.log(dateToDayNumber(selectedDate));
+  //   // console.log(wordList[dateToDayNumber(selectedDate)]);
+  //   console.log("Initializing");
+  //   setWord(wordList[dateToDayNumber(selectedDate)]);
 
-    // Handle Local Storage Data
-    const nCurrentDay = localStorage.getItem("TYLERDLE_CURRENT_DAY");
-    const nCurrentWord = Number(localStorage.getItem("TYLERDLE_CURRENT_WORD"));
-    const nHistory = JSON.parse(localStorage.getItem("TYLERDLE_HISTORY"));
-    const nGuesses = JSON.parse(localStorage.getItem("TYLERDLE_GUESSES"));
-    // console.log(nGuesses);
-    if (
-      nCurrentDay &&
-      dayjs(nCurrentDay).isSame(selectedDate, "day") &&
-      nCurrentWord &&
-      nGuesses
-    ) {
-      setCurrentWord(nCurrentWord);
-      setGuesses(nGuesses);
-    }
+  //   // Handle Local Storage Data
+  //   const nCurrentDay = localStorage.getItem("TYLERDLE_CURRENT_DAY");
+  //   const nCurrentWord = Number(localStorage.getItem("TYLERDLE_CURRENT_WORD"));
+  //   const nHistory = JSON.parse(localStorage.getItem("TYLERDLE_HISTORY"));
+  //   const nGuesses = JSON.parse(localStorage.getItem("TYLERDLE_GUESSES"));
+  //   // console.log(nGuesses);
+  //   if (
+  //     nCurrentDay &&
+  //     dayjs(nCurrentDay).isSame(selectedDate, "day") &&
+  //     nCurrentWord &&
+  //     nGuesses
+  //   ) {
+  //     setCurrentWord(nCurrentWord);
+  //     setGuesses(nGuesses);
+  //   }
 
-    if (nHistory) {
-      setHistory(nHistory);
-    }
-  }, [wordList]);
+  //   if (nHistory) {
+  //     setHistory(nHistory);
+  //   }
+  // }, [wordList]);
 
   const ref = useRef(null);
   const refDate = useRef(null);
@@ -142,19 +161,12 @@ function Tylerdle({ id }) {
     if (currentWord >= 6) return;
     if (letter === "enter") {
       if (
-        guesses[currentWord].text.split("").filter((e) => e !== "_").length ===
-          5 &&
+        guesses[currentWord].length === 5 &&
         Object.values(wordList).some(
-          (value) =>
-            value.toLowerCase() === guesses[currentWord].text.toLowerCase()
+          (value) => value.toLowerCase() === guesses[currentWord].toLowerCase()
         )
       ) {
-        const newGuesses = [...guesses];
-        newGuesses[currentWord] = {
-          ...newGuesses[currentWord],
-          submitted: true,
-        };
-        if (guesses[currentWord].text === word) {
+        if (guesses[currentWord] === word) {
           setMessage("🎉 " + word.toUpperCase() + " 🎉");
           if (selectedDate.isSame(dayjs(), "day")) {
             setHistoryLocal([
@@ -169,61 +181,45 @@ function Tylerdle({ id }) {
               { date: selectedDate.format("YYYY-MM-DD"), type: 1 },
             ]);
           }
-          // setMessageHelper(word.toUpperCase());
           setCurrentWordLocal(6);
         } else if (currentWord < 5) {
-          newGuesses[currentWord + 1] = {
-            ...newGuesses[currentWord + 1],
-            text: "_",
-          };
           setCurrentWordLocal(currentWord + 1);
         } else {
           setCurrentWordLocal(currentWord + 1);
           setMessage(word.toUpperCase());
         }
-        setGuessesLocal(newGuesses);
+        setGuessesLocal(guesses);
       } else {
         setMessageHelper("Invalid Word");
       }
     } else if (letter === "delete" || letter === "backspace") {
       const newGuesses = [...guesses];
-
-      const nWord = newGuesses[currentWord].text;
-      const wordFiltered = nWord.split("").filter((e) => e !== "_");
-      newGuesses[currentWord] = {
-        submitted: guesses[currentWord].submitted,
-        text: wordFiltered
-          .slice(0, wordFiltered.length - 1)
-          .concat("_")
-          .slice(0, 5)
-          .join(""),
-      };
-      setGuessesLocal(newGuesses);
-    } else {
+      newGuesses[currentWord] = newGuesses[currentWord].slice(
+        0,
+        newGuesses[currentWord].length === 0
+          ? 0
+          : newGuesses[currentWord].length - 1
+      );
+      setGuesses(newGuesses);
+    } else if (guesses[currentWord].length < 5) {
       const newGuesses = [...guesses];
-      const nWord = newGuesses[currentWord].text;
-      newGuesses[currentWord] = {
-        submitted: guesses[currentWord].submitted,
-        text: nWord
-          .split("")
-          .filter((e) => e !== "_")
-          .concat(letter, "_")
-          .slice(0, 5)
-          .join(""),
-      };
+      newGuesses[currentWord] = newGuesses[currentWord].concat(letter);
       setGuesses(newGuesses);
     }
   };
 
-  const handleKeyPress = useCallback((event) => {
-    if (!enableKeys) return;
-  
-    const key = event.key.toLowerCase();
-    if ([...topRow, ...midRow, ...botRow, "backspace"].includes(key)) {
-      keyBoardType(key);
-    }
-  }, [enableKeys, keyBoardType]); // Memoize dependencies
-  
+  const handleKeyPress = useCallback(
+    (event) => {
+      if (!enableKeys) return;
+
+      const key = event.key.toLowerCase();
+      if ([...topRow, ...midRow, ...botRow, "backspace"].includes(key)) {
+        keyBoardType(key);
+      }
+    },
+    [enableKeys, keyBoardType]
+  ); // Memoize dependencies
+
   useEffect(() => {
     document.addEventListener("keydown", handleKeyPress);
     return () => document.removeEventListener("keydown", handleKeyPress);
@@ -231,7 +227,12 @@ function Tylerdle({ id }) {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
+      console.log(event.target.tagName);
+
+      if (
+        (ref.current && !ref.current.contains(event.target)) ||
+        event.target.tagName === "INPUT"
+      ) {
         setEnableKeys(false);
       }
       if (refDate.current && !refDate.current.contains(event.target)) {
@@ -245,8 +246,6 @@ function Tylerdle({ id }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const [checkedCollapse, setCheckedCollapse] = useState(false);
 
   const handleChangeCollapse = () => {
     setCheckedCollapse((prev) => !prev);
@@ -263,20 +262,13 @@ function Tylerdle({ id }) {
         localStorage.getItem("TYLERDLE_CURRENT_WORD")
       );
       const nGuesses = JSON.parse(localStorage.getItem("TYLERDLE_GUESSES"));
-      if (nCurrentWord && nGuesses) {
+      if (nCurrentWord && nGuesses && nGuesses[0].text === undefined) {
         setCurrentWord(nCurrentWord);
         setGuesses(nGuesses);
       }
     } else {
       setCurrentWord(0);
-      setGuesses([
-        { text: "_", submitted: false },
-        { text: "", submitted: false },
-        { text: "", submitted: false },
-        { text: "", submitted: false },
-        { text: "", submitted: false },
-        { text: "", submitted: false },
-      ]);
+      setGuesses(["", "", "", "", "", ""]);
     }
     setMessage("");
   };
@@ -292,10 +284,16 @@ function Tylerdle({ id }) {
     }
   };
 
+  const handleSetEnableKeys = (event) => {
+    if (!refDate.current.contains(event.target)) {
+      setEnableKeys(true);
+    }
+  };
+
   return (
     <div
       className={styles["container"]}
-      onClick={() => setEnableKeys(true)}
+      onMouseDown={handleSetEnableKeys}
       ref={ref}
       id={id}
     >
@@ -326,10 +324,11 @@ function Tylerdle({ id }) {
               <div
                 className={styles["calendar-date"]}
                 onClick={handleChangeCollapse}
-                title="select date"
+                title="Open Menu"
               >
                 <Typography variant="h6" className={styles["overflow-text"]}>
-                  {selectedDate.format("dddd, MMMM D, YYYY")}
+                  {checkedCollapse ? <UnfoldLessIcon /> : <UnfoldMoreIcon />}
+                  {selectedDate.format("dddd, MMMM D, YYYY")}{" "}
                 </Typography>
               </div>
             </div>
@@ -340,7 +339,11 @@ function Tylerdle({ id }) {
                 tempDate={tempDate}
                 setTempDate={setTempDate}
                 history={history}
-                // wordList={wordList}
+                guesses={guesses}
+                wordToGuess={word}
+                currentWord={currentWord}
+                wordList={wordList}
+                setEnableKeys={setEnableKeys}
               />
             </Collapse>
           </div>
@@ -349,54 +352,31 @@ function Tylerdle({ id }) {
         {guesses.map((guess, i) => (
           <WordleSquare
             key={i}
-            text={guess.text}
-            submitted={guess.submitted}
+            text={guess}
+            submitted={i < currentWord}
             enableKeys={enableKeys}
             word={word}
             guesses={guesses}
+            index={i}
+            currentWord={currentWord}
           />
         ))}
         <div className={styles["keyboard"]}>
-          <div className={styles["keys"]}>
-            {topRow.map((k, i) => (
-              <WordleKeyboard
-                enableKeys={enableKeys}
-                key={i}
-                keyBoardType={keyBoardType}
-                text={k}
-                word={word}
-                guesses={guesses}
-                currentWord={currentWord}
-              />
-            ))}
-          </div>
-          <div className={styles["keys"]}>
-            {" "}
-            {midRow.map((k, i) => (
-              <WordleKeyboard
-                enableKeys={enableKeys}
-                key={i}
-                keyBoardType={keyBoardType}
-                text={k}
-                word={word}
-                guesses={guesses}
-                currentWord={currentWord}
-              />
-            ))}
-          </div>{" "}
-          <div className={styles["keys"]}>
-            {botRow.map((k, i) => (
-              <WordleKeyboard
-                enableKeys={enableKeys}
-                key={i}
-                keyBoardType={keyBoardType}
-                text={k}
-                word={word}
-                guesses={guesses}
-                currentWord={currentWord}
-              />
-            ))}
-          </div>
+          {[topRow, midRow, botRow].map((row, rowIndex) => (
+            <div key={rowIndex} className={styles["keys"]}>
+              {row.map((k, i) => (
+                <WordleKeyboard
+                  enableKeys={enableKeys}
+                  key={i}
+                  keyBoardType={keyBoardType}
+                  text={k}
+                  word={word}
+                  guesses={guesses}
+                  currentWord={currentWord}
+                />
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </div>

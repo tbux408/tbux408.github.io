@@ -3,7 +3,15 @@ import { styled, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import styles from "../styles/WordleSquare.module.css";
 
-function WordleSquare({ text, submitted, enableKeys, word, guesses }) {
+function WordleSquare({
+  text,
+  submitted,
+  enableKeys,
+  word,
+  guesses,
+  currentWord,
+  index,
+}) {
   const theme = useTheme();
   const [color, setColor] = useState(theme.palette.secondary.main);
 
@@ -55,10 +63,9 @@ function WordleSquare({ text, submitted, enableKeys, word, guesses }) {
 
   const showGreen = (i) => {
     if (
-      text.includes("_") &&
+      currentWord === index &&
       guesses.some(
-        (g) =>
-          g.text.split("")[text.length + i] === word.split("")[text.length + i]
+        (g) => g.split("")[text.length + i] === word.split("")[text.length + i]
       )
     ) {
       return word.split("")[text.length + i].toUpperCase();
@@ -67,8 +74,8 @@ function WordleSquare({ text, submitted, enableKeys, word, guesses }) {
 
   const showCursor = (i) => {
     if (
-      text.includes("_") &&
-      guesses.some((g) => g.text.split("")[i] === word.split("")[i])
+      currentWord === index &&
+      guesses.some((g) => g.split("")[i] === word.split("")[i])
     ) {
       return word.split("")[i].toUpperCase();
     } else {
@@ -93,13 +100,13 @@ function WordleSquare({ text, submitted, enableKeys, word, guesses }) {
                 backgroundColor: calcSubColor2(c, i),
               }}
             >
-              {c === "_" ? (
+              {i === text.length ? (
                 <div
                   className={`${styles["font-size-empty"]} 
                 }`}
                 >
-                  {showCursor(i)}
-                  <div className={`${enableKeys && styles["flash"]}`}></div>
+                  {/* {showCursor(i)}
+                  <div className={`${enableKeys && styles["flash"]}`}></div> */}
                 </div>
               ) : (
                 <div className={styles["font-size"]}>{c.toUpperCase()}</div>
@@ -114,7 +121,12 @@ function WordleSquare({ text, submitted, enableKeys, word, guesses }) {
         .map((_, i) => (
           <div key={i} className={styles["square-box"]}>
             <div className={styles["letter-box"]}>
-              <div className={styles["font-size-empty"]}>{showGreen(i)}</div>
+              <div className={styles["font-size-empty"]}>
+                {showGreen(i)}{" "}
+                {i === 0 && index === currentWord && (
+                  <div className={`${enableKeys && styles["flash"]}`}></div>
+                )}
+              </div>
             </div>
           </div>
         ))}
