@@ -7,6 +7,20 @@ const YEARS = [
     year: "2025",
     events: [
       {
+        title: "Full Stack Developer II",
+        description: "Software Engineer @ FedEx",
+        time: "Jun – Present",
+        pic: "/fedex.png",
+        alt: "fedex logo",
+      },
+      {
+        title: "🎓 Graduated",
+        description: "Completed Master's Degree · Virginia Tech",
+        time: "May",
+        pic: "/Virginia-Tech-Logo.png",
+        alt: "vt logo",
+      },
+      {
         title: "Graduate Teaching Assistant",
         description: "Comparative Languages",
         time: "Spring",

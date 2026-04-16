@@ -187,22 +187,26 @@ function About() {
           </div>
           {/* Bio text */}
           <div className="space-y-4">
-            <h1 className="text-2xl font-bold text-fg">Tyler Buxton</h1>
+            <div>
+              <h1 className="text-2xl font-bold text-fg">Tyler Buxton</h1>
+              <div className="flex items-center gap-2 mt-1">
+                <img
+                  src="/fedex.png"
+                  alt="FedEx"
+                  className="h-4 object-contain"
+                />
+                <span className="text-sm text-fg-dim">Full Stack Developer II · Remote</span>
+                <span className="text-xs text-fg-faint">Jun 2025 – Present</span>
+              </div>
+            </div>
             <p className="text-fg-dim leading-relaxed">
-              I am a Master's student in Computer Science at Virginia Tech,
-              specializing in Computer Science Education. My research focuses on
-              creating web application tools to enhance learning experiences.
+              I am a Software Developer II at FedEx working on Android applications
+              for pickup and delivery. I completed my M.S. in Computer Science at
+              Virginia Tech, specializing in Computer Science Education, where my
+              research focused on creating web application tools to enhance learning
+              experiences.
             </p>
-            <p className="text-fg-dim leading-relaxed">
-              I am currently serving as a graduate teaching assistant for CS3304.
-              After graduating in the spring, I am starting my career in software
-              engineering, focusing on full-stack development with a strong interest
-              in frontend technologies.
-            </p>
-            <p className="text-fg-dim leading-relaxed">
-              My goal is to develop my career and skills while building impactful
-              software solutions.
-            </p>
+            
           </div>
         </div>
       </section>
