@@ -24,6 +24,40 @@
   --color-line-hi: #3a3a45;
 }
 
+/* ─── Light mode: auto from system preference ─────────────────────────────── */
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Backgrounds */
+    --color-bg: #f5f5f7;
+    --color-bg-subtle: #e8e8ed;
+    --color-card: #ffffff;
+    --color-card-hi: #f0f0f5;
+    --color-raised: #f5f5f7;
+
+    /* Foreground / text */
+    --color-fg: #1d1d1f;
+    --color-fg-dim: #6e6e73;
+    --color-fg-faint: #86868b;
+
+    /* Accent — same blue, works on light */
+    --color-blue: #0071e3;
+    --color-blue-hi: #0077ed;
+
+    /* Borders */
+    --color-line: #d2d2d7;
+    --color-line-hi: #aeaeb2;
+  }
+
+  body {
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+  }
+
+  ::-webkit-scrollbar-track { background: #e8e8ed; }
+  ::-webkit-scrollbar-thumb { background: #aeaeb2; }
+}
+/* ─────────────────────────────────────────────────────────────────────────── */
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -35,8 +69,8 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background-color: #0a0a0b;
-  color: #f0f0f0;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -65,6 +99,26 @@ a {
 .scroll-none::-webkit-scrollbar {
   display: none;
 }
+
+/* ─── Theme-aware header background ──────────────────────────────────────── */
+/* nav bar: slightly translucent */
+.bg-header {
+  background-color: rgb(10 10 11 / 0.82);
+}
+/* mobile menu: more opaque */
+.bg-header-solid {
+  background-color: rgb(10 10 11 / 0.96);
+}
+
+@media (prefers-color-scheme: light) {
+  .bg-header {
+    background-color: rgb(255 255 255 / 0.85);
+  }
+  .bg-header-solid {
+    background-color: rgb(255 255 255 / 0.97);
+  }
+}
+/* ─────────────────────────────────────────────────────────────────────────── */
 
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }

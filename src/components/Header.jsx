@@ -86,7 +86,7 @@ function Header() {
     <header className="fixed top-0 left-0 right-0 z-50">
       {/* Main nav bar */}
       <nav
-        className="flex items-center justify-between px-5 h-14 bg-[#0a0a0bcc] backdrop-blur-xl border-b border-line"
+        className="flex items-center justify-between px-5 h-14 bg-header backdrop-blur-xl border-b border-line"
         style={{ transition: "background-color 0.3s ease" }}
       >
         <Logo />
@@ -153,7 +153,7 @@ function Header() {
 
       {/* Mobile menu */}
       <div
-        className={`sm:hidden overflow-hidden transition-all duration-300 bg-[#0a0a0bf2] backdrop-blur-xl border-b border-line ${
+        className={`sm:hidden overflow-hidden transition-all duration-300 bg-header-solid backdrop-blur-xl border-b border-line ${
           mobileOpen ? "max-h-screen" : "max-h-0"
         }`}
       >
