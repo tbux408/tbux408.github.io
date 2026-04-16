@@ -77,13 +77,12 @@ const LINKS = [
 ];
 
 const SKILL_GROUPS = [
-  { label: "Deployment", items: ["Docker", "Kubernetes", "Adminer"] },
+  { label: "Languages", items: ["Python", "Java", "TypeScript", "JavaScript", "HTML", "CSS"] },
+  { label: "Technologies", items: ["React", "Android", "Tailwind CSS", "TanStack Router", "React Query", "Fastify", "Zod", "Vite", "DynamoDB", "Docker", "Splunk", "Claude", "Copilot"] },
   { label: "AI", items: ["OpenAI", "Gemini", "Ollama"] },
-  { label: "Frameworks", items: ["React.js", "Next.js", "Angular", "Vue"] },
-  { label: "Back-end", items: ["Django", "Poetry", "Quart"] },
-  { label: "Front-end Languages", items: ["HTML", "CSS", "JavaScript", "TypeScript"] },
-  { label: "Back-end Languages", items: ["Python", "Java"] },
+  { label: "Back-end", items: ["Django", "Quart", "Poetry"] },
   { label: "Databases", items: ["SQL", "MariaDB", "SQLite", "Firebase"] },
+  { label: "Deployment", items: ["Docker", "Kubernetes", "Adminer"] },
 ];
 
 const ORGANIZATIONS = [
