@@ -339,7 +339,7 @@ function Projects() {
         pic={
           <img
             className="w-full h-48 object-cover"
-            src="/meals/loginPage.png"
+            src="/_meals/loginPage.png"
             alt="Meals login"
           />
         }
@@ -349,7 +349,7 @@ function Projects() {
         pic={
           <img
             className="w-full h-48 object-cover"
-            src="/meals/mealsPage.png"
+            src="/_meals/mealsPage.png"
             alt="Meals planning page"
           />
         }
@@ -359,7 +359,7 @@ function Projects() {
         pic={
           <img
             className="w-full h-48 object-cover"
-            src="/meals/editPage.png"
+            src="/_meals/editPage.png"
             alt="Meals edit page"
           />
         }
@@ -369,7 +369,7 @@ function Projects() {
         pic={
           <img
             className="w-full h-48 object-cover"
-            src="/meals/groceryList.png"
+            src="/_meals/groceryList.png"
             alt="Meals grocery list"
           />
         }
