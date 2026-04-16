@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { User, FolderOpen, Briefcase, FileText, ArrowRight } from "lucide-react";
+import { User, FolderOpen, Briefcase, FileText, ArrowRight, Linkedin } from "lucide-react";
 
 const NAV_CARDS = [
   {
@@ -81,12 +81,16 @@ function Home() {
           >
             View Portfolio
           </button>
-          <button
-            onClick={() => navigate("/resume")}
-            className="px-6 py-2.5 rounded-full bg-raised border border-line text-fg-dim text-sm font-semibold hover:text-fg hover:border-line-hi transition-all"
+         
+          <a
+            href="https://www.linkedin.com/in/tbux/"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-raised border border-line text-fg-dim text-sm font-semibold hover:text-fg hover:border-line-hi transition-all"
           >
-            Resume
-          </button>
+            <Linkedin size={15} />
+            LinkedIn
+          </a>
         </div>
       </section>
 
