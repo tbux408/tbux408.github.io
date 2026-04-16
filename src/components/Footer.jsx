@@ -24,7 +24,7 @@ function Footer() {
         </p>
         <hr className="border-line" />
         <div className="flex items-center justify-between">
-          <p className="text-xs text-fg-faint">© 2025 Tyler Buxton · tbux@vt.edu</p>
+          <p className="text-xs text-fg-faint">© {new Date().getFullYear()} Tyler Buxton · tbux@vt.edu</p>
           <p className="text-xs text-fg-faint">United States</p>
         </div>
       </div>

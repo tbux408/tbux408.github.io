@@ -19,6 +19,8 @@ const NAV_ITEMS = [
     label: "Projects",
     path: "/projects",
     sub: [
+      { name: "Empower", link: "/projects?id=empower" },
+      { name: "Meals", link: "/projects?id=meals" },
       { name: "Gitit", link: "/projects?id=gitit" },
       { name: "AI Chatbot", link: "/projects?id=chatbot" },
       { name: "Hotel Scouter", link: "/projects?id=hotelscouter" },
