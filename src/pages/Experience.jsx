@@ -23,6 +23,13 @@ const YEARS = [
       {
         title: "Graduate Teaching Assistant",
         description: "Comparative Languages",
+        time: "Fall",
+        pic: "/Virginia-Tech-Logo.png",
+        alt: "vt logo",
+      },
+      {
+        title: "Graduate Teaching Assistant",
+        description: "Comparative Languages",
         time: "Spring",
         pic: "/Virginia-Tech-Logo.png",
         alt: "vt logo",

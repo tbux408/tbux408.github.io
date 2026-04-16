@@ -65,10 +65,10 @@ function Home() {
             Tyler Buxton
           </h1>
           <p className="text-lg text-fg-dim mb-2">
-            Master's Student in Computer Science
+            Software Engineer @ FedEx
           </p>
           <p className="text-base text-fg-faint mb-8">
-            Virginia Tech · CS Education & Full-Stack Development
+            Virginia Tech · FedEx · Full-Stack Development
           </p>
         </div>
 
