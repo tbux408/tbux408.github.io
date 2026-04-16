@@ -3,7 +3,7 @@ import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import { Download } from "lucide-react";
 
-const PDF_URL = "/Buxton_Resume_09.2024_v2.pdf";
+const PDF_URL = "/Buxton_Resume.pdf";
 
 function Resume() {
   const handleDownload = () => {
