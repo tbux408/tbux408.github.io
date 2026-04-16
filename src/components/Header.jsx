@@ -77,7 +77,9 @@ function Header() {
   // Close mobile menu on resize to desktop
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 640px)");
-    const handler = () => { if (mq.matches) setMobileOpen(false); };
+    const handler = () => {
+      if (mq.matches) setMobileOpen(false);
+    };
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
   }, []);
@@ -153,8 +155,13 @@ function Header() {
 
       {/* Mobile menu */}
       <div
-        className={`sm:hidden overflow-hidden transition-all duration-300 bg-header-solid backdrop-blur-xl border-b border-line ${
-          mobileOpen ? "max-h-screen" : "max-h-0"
+        className={`sm:hidden transition-all duration-300 bg-header-solid backdrop-blur-xl border-b border-line ${
+          /* 1. Changed overflow-hidden to overflow-y-auto 
+       2. Changed max-h-screen to a calculation if you have a fixed header height (e.g., 64px)
+    */
+          mobileOpen
+            ? "max-h-[calc(100vh-64px)] overflow-y-auto"
+            : "max-h-0 overflow-hidden"
         }`}
       >
         <div className="px-4 py-4 space-y-1">
