@@ -77,7 +77,6 @@ function Projects() {
           />
         }
         description="Instructors can create custom exercises at varying difficulty levels. Gitit also offers a rich database of pre-created exercises, making it easy for anyone to start learning."
-        
       />,
     ],
   };
@@ -132,7 +131,6 @@ function Projects() {
           />
         }
         description=""
-        
       />,
     ],
   };
@@ -165,7 +163,6 @@ function Projects() {
           />
         }
         description="Identifies hotels and nearby points of interest within a specified area. Predicts average daily room rates and compares them to actual prices for informed acquisition decisions."
-        
       />,
     ],
   };
@@ -192,7 +189,6 @@ function Projects() {
           />
         }
         description="A reverse 20 Questions game powered by Google Gemini. Each day, players guess the word of the day by asking strategic yes-or-no questions — blending classic gameplay with modern Wordle-style design."
-        
       />,
     ],
   };
@@ -225,7 +221,6 @@ function Projects() {
           />
         }
         description="Calendar system for event planning. Admins can create events and assign responsibilities to members, ensuring clear communication within the organization."
-        
       />,
     ],
   };
@@ -258,7 +253,6 @@ function Projects() {
           />
         }
         description=""
-        
       />,
     ],
   };
@@ -378,9 +372,47 @@ function Projects() {
     ],
   };
 
+  const projectDebate = {
+    title: "Debate Utterance Analyzer",
+    id: "debate",
+    role: ["Research project"],
+    collab: ["4 person team"],
+    tools: [
+      "React",
+      "Material UI",
+      "Recharts",
+      "Axios",
+      "Flask",
+      "YT-DLP",
+      "Assembly AI",
+      "MongoDB Atlas",
+      "HuggingFace Inference Endpoints",
+      "NLTK",
+    ],
+    languages: ["JavaScript", "Python"],
+    link: <LinkButton url="https://github.com/mbrenn07/peitho" />,
+    cards: [
+      <CardPicture
+        pic={
+          <iframe
+            className="w-full h-56"
+            src="https://www.youtube.com/embed/hIDCsQngj2Y"
+            title="Debate Utterance Analyzer demo"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        }
+        description="Debate utterance analysis provides novel insight into political rhetoric from a larger set of speech acts than other work. Accessible through a YouTube plugin, utilizing an LLM utterance separator and LLM label classifier."
+      />,
+    ],
+  };
+
   const projects = [
     projectEmpower,
     projectMeals,
+    projectDebate,
     project1,
     project2,
     project3,
